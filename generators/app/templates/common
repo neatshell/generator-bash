@@ -1,0 +1,19 @@
+# print log message
+log ()
+{
+    echo "[${SCRIPT_NAME}]: $1" > /dev/stderr
+}
+
+# print debug message if script called with verbose mode
+debug()
+{
+    [ "$VERBOSE" ] && echo "[${SCRIPT_NAME}]: $1" > /dev/stderr
+}
+
+# print error message and exit
+error()
+{
+    echo "[${SCRIPT_NAME}] ERROR: $1" > /dev/stderr
+    [ $# -gt 1 ] && exit $2
+    exit 1
+}

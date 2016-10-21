@@ -1,0 +1,10 @@
+main()
+{
+    get_options "$@"
+    <% if (options.length>0) {%># INPUT OPTIONS: <% } %>
+    <% for(var i=0; i<options.length; i++) {%># $<%= options[i].varName %> : <%= options[i].varDesc %>
+    <% } %>
+    <% if (flags.length>0) {%># INPUT FLAGS: <% } %>
+    <% for(var i=0; i<flags.length; i++) {%># $<%= flags[i].flagName %> : <%= flags[i].flagDesc %>
+    <% } %>
+}

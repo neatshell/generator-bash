@@ -1,0 +1,17 @@
+usage()
+{
+cat << EOF
+usage: $0 [-v<% for(var i=0; i<flags.length; i++) {%><%= flags[i].flagShort %><% } %>] <% for(var i=0; i<options.length; i++) {%>[-<%= options[i].varShort %> VALUE] <% } %>
+<% if (description) {%>
+<%= description %>
+<% } %>
+<% if (options.length>0) {%>Options: <% } %><% for(var i=0; i<options.length; i++) {%>
+  -<%= options[i].varShort %>     <%= options[i].varDesc %><% } %>
+<% if (flags.length>0) {%>Flags: <% } %><% for(var i=0; i<flags.length; i++) {%>
+  -<%= flags[i].flagShort %>     <%= flags[i].flagDesc %><% } %>
+Standard Options:
+  -v         Verbose mode
+  --help     Show this help
+  --version  Show script version
+EOF
+}

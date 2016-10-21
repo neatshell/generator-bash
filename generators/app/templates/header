@@ -1,0 +1,4 @@
+#<%= shebang %>
+
+SCRIPT_NAME=`basename $0`
+VERSION=0.1.0

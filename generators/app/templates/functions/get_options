@@ -1,0 +1,17 @@
+get_options()
+{
+    while getopts "<% for(var i=0; i<options.length; i++) {%><%= options[i].varShort%>:<% } %><% for(var i=0; i<flags.length; i++) {%><%= flags[i].flagShort%><% } %>v-:" OPTION
+    do
+        if [ $OPTION == "-" ]; then
+            OPTION=$OPTARG
+        fi
+        case $OPTION in <% for(var i=0; i<options.length; i++) {%>
+            <%= options[i].varShort %>)  <%= options[i].varName%>=${OPTARG};;<% } %><% for(var i=0; i<flags.length; i++) {%>
+            <%= flags[i].flagShort %>)  <%= flags[i].flagName%>=1;;<% } %>
+            v)  VERBOSE=1;;
+       'help')  usage && exit 0;;
+    'version')  echo $VERSION && exit 0;;
+           \?)  echo "Invalid option" && usage && exit 1;;
+        esac
+    done
+}
