@@ -10,9 +10,9 @@ get_options()
             # long-option handling
             -)
               case "${OPTARG}" in
-                help)  usage && exit 0;;
-                version)  echo $VERSION && exit 0;;
-#l                flag) MYFLAG=1;;
+                help) usage && exit 0;;
+                version) echo $VERSION && exit 0;; <% for(var i=0; i<flags.length; i++) {%>
+                <% if (flags[i].flagLong.length) {%><%= flags[i].flagLong %>) <%= flags[i].flagName%>=1;;<% } %><% } %>
 #l                option)
 #l                  MYOPTION="${!OPTIND}"; OPTIND=$(( $OPTIND + 1 ))
 #l                  # Mimic "getopts" handling of mandatory argument for short option, when not in silent mode ":"
