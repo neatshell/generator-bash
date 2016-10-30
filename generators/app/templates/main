@@ -7,4 +7,7 @@ main()
     <% if (flags.length>0) {%># INPUT FLAGS: <% } %>
     <% for(var i=0; i<flags.length; i++) {%># $<%= flags[i].flagName %> : <%= flags[i].flagDesc %>
     <% } %>
+
+    echo "MYFLAG: $MYFLAG"
+    echo "MYOPTION: $MYOPTION"
 }
