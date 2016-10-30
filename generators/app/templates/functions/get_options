@@ -3,37 +3,53 @@ get_options()
     OPTSTRING="<% for(var i=0; i<options.length; i++) {%><%= options[i].varShort%>:<% } %><% for(var i=0; i<flags.length; i++) {%><%= flags[i].flagShort%><% } %>v-:"
     while getopts $OPTSTRING OPTION
     do
-        case $OPTION in <% for(var i=0; i<options.length; i++) {%>
-            <%= options[i].varShort %>)  <%= options[i].varName%>=${OPTARG};;<% } %><% for(var i=0; i<flags.length; i++) {%>
-            <%= flags[i].flagShort %>)  <%= flags[i].flagName%>=1;;<% } %>
+        case $OPTION in
+        <% for(var i=0; i<options.length; i++) {-%>
+          <% if (options[i].varShort.length) {-%>
+            <%= options[i].varShort %>)  <%= options[i].varName%>=${OPTARG};;
+          <% } -%>
+        <% } -%>
+        <% for(var i=0; i<flags.length; i++) {-%>
+          <% if (flags[i].flagShort.length) {-%>
+            <%= flags[i].flagShort %>)  <%= flags[i].flagName%>=1;;
+          <% } -%>
+        <% } -%>
             v) VERBOSE=1;;
-            # long-option handling
+            # START - long-option handling
             -)
               case "${OPTARG}" in
                 help) usage && exit 0;;
-                version) echo $VERSION && exit 0;; <% for(var i=0; i<flags.length; i++) {%>
-                <% if (flags[i].flagLong.length) {%><%= flags[i].flagLong %>) <%= flags[i].flagName%>=1;;<% } %><% } %>
-#l                option)
-#l                  MYOPTION="${!OPTIND}"; OPTIND=$(( $OPTIND + 1 ))
-#l                  # Mimic "getopts" handling of mandatory argument for short option, when not in silent mode ":"
-#l                  if [ -z "$MYOPTION" ] && [ "${OPTSTRING:0:1}" != ":" ]; then
-#l                    error "option requires an argument -- ${OPTARG}" usage 1
-#l                  fi
-#l                  ;;
-#l                option=*)
-#l                  MYOPTION=${OPTARG#*=}
-#l                  if [ -z "$MYOPTION" ] && [ "${OPTSTRING:0:1}" != ":" ]; then
-#l                    OPTNAME=${OPTARG%=$MYOPTION}
-#l                    error "option requires an argument -- ${OPTNAME}" usage 1
-#l                  fi
-#l                  ;;
+                version) echo $VERSION && exit 0;;
+                <% for(var i=0; i<flags.length; i++) {-%>
+                  <% if (flags[i].flagLong.length) {-%>
+                    <%= flags[i].flagLong %>) <%= flags[i].flagName%>=1;;
+                  <% } -%>
+                <% } -%>
+                <% for(var i=0; i<options.length; i++) {-%>
+                  <% if (options[i].varLong.length) {-%>
+                    <%= options[i].varLong %>)
+                      <%= options[i].varName%>="${!OPTIND}"; OPTIND=$(( $OPTIND + 1 ))
+                      if [ -z "$<%= options[i].varName%>" ] && [ "${OPTSTRING:0:1}" != ":" ]; then
+                        error "option requires an argument -- ${OPTARG}" usage 1
+                      fi
+                      ;;
+                    <%= options[i].varLong %>=*)
+                      <%= options[i].varName%>=${OPTARG#*=}
+                      if [ -z "$<%= options[i].varName%>" ] && [ "${OPTSTRING:0:1}" != ":" ]; then
+                      OPTNAME=${OPTARG%=$<%= options[i].varName%>}
+                        error "option requires an argument -- ${OPTNAME}" usage 1
+                      fi
+                      ;;
+                    <% } -%>
+                <% } -%>
                 *)
-                  # Mimic "getopts "handling of illegal option for short option, when not in silent mode ":"
+                # Mimic "getopts "handling of illegal option for short option, when not in silent mode ":"
                   if [ "$OPTERR" = 1 ] && [ "${OPTSTRING:0:1}" != ":" ]; then
                     error "illegal option -- ${OPTARG}" usage 1
-                  fi
-                  ;;
-              esac;;
+                fi
+                ;;
+                esac;;
+            # END - long-option handling
            \?) [ "${OPTSTRING:0:1}" != ":" ] && usage && exit 1;;
         esac
     done
