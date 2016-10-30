@@ -64,6 +64,11 @@ module.exports = yeoman.Base.extend({
       },
       {
         type: 'input',
+        name: 'varLong',
+        message: 'long option name'
+      },
+      {
+        type: 'input',
         name: 'varDesc',
         message: 'description'
       },
@@ -84,6 +89,11 @@ module.exports = yeoman.Base.extend({
         type: 'input',
         name: 'flagShort',
         message: 'short flag name'
+      },
+      {
+        type: 'input',
+        name: 'flagLong',
+        message: 'long flag name'
       },
       {
         type: 'input',
@@ -109,6 +119,7 @@ module.exports = yeoman.Base.extend({
             options.push(utils.createOption(
               optionProps.varName,
               optionProps.varShort,
+              optionProps.varLong,
               optionProps.varDesc));
 
             promptOption(optionProps.hasAnotherOption);
@@ -126,6 +137,7 @@ module.exports = yeoman.Base.extend({
             flags.push(utils.createFlag(
               flagProps.flagName,
               flagProps.flagShort,
+              flagProps.flagLong,
               flagProps.flagDesc));
 
             promptFlag(flagProps.hasAnotherFlag);
