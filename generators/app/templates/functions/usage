@@ -1,7 +1,7 @@
 usage()
 {
 cat << EOF
-usage: $0 [-v<% for(var i=0; i<flags.length; i++) {-%><%= flags[i].flagShort -%><% } -%>] <% for(var i=0; i<options.length; i++) {-%>[-<%= options[i].varShort -%> VALUE] <% } -%>
+usage: $0 [-v<% for(var i=0; i<flags.length; i++) {-%><%= flags[i].varShort -%><% } -%>] <% for(var i=0; i<options.length; i++) {-%>[-<%= options[i].varShort -%> VALUE] <% } -%>
 
 <% if (description) {-%>
 
@@ -20,9 +20,9 @@ usage: $0 [-v<% for(var i=0; i<flags.length; i++) {-%><%= flags[i].flagShort -%>
 
 <% if (flags.length>0) {-%>Flags:
 <% for(var i=0; i<flags.length; i++) {-%>
-<% if (flags[i].flagShort.length) {-%>-<%= flags[i].flagShort -%><% } -%><% if (flags[i].flagShort.length && flags[i].flagLong.length) {-%>, --<%= flags[i].flagLong -%><% } -%>
-<% if (!flags[i].flagShort.length && flags[i].flagLong.length) {-%>--<%= flags[i].flagLong -%><% } -%>
-   <%= flags[i].flagDesc -%>
+<% if (flags[i].varShort.length) {-%>-<%= flags[i].varShort -%><% } -%><% if (flags[i].varShort.length && flags[i].varLong.length) {-%>, --<%= flags[i].varLong -%><% } -%>
+<% if (!flags[i].varShort.length && flags[i].varLong.length) {-%>--<%= flags[i].varLong -%><% } -%>
+   <%= flags[i].varDesc -%>
 
 <% } -%>
 <% } -%>

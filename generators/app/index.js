@@ -82,22 +82,22 @@ module.exports = yeoman.Base.extend({
     var flagPrompts = [
       {
         type: 'input',
-        name: 'flagName',
+        name: 'varName',
         message: 'flag name'
       },
       {
         type: 'input',
-        name: 'flagShort',
+        name: 'varShort',
         message: 'short flag name'
       },
       {
         type: 'input',
-        name: 'flagLong',
+        name: 'varLong',
         message: 'long flag name'
       },
       {
         type: 'input',
-        name: 'flagDesc',
+        name: 'varDesc',
         message: 'description'
       },
       {
@@ -135,16 +135,16 @@ module.exports = yeoman.Base.extend({
         self.prompt(flagPrompts)
           .then(function (flagProps) {
             flags.push(utils.createFlag(
-              flagProps.flagName,
-              flagProps.flagShort,
-              flagProps.flagLong,
-              flagProps.flagDesc));
+              flagProps.varName,
+              flagProps.varShort,
+              flagProps.varLong,
+              flagProps.varDesc));
 
             promptFlag(flagProps.hasAnotherFlag);
           });
       }
       else {
-        self._writing();
+        self._prewriting();
       }
     }
 
@@ -174,16 +174,23 @@ module.exports = yeoman.Base.extend({
       }.bind(this));
   },
 
+  _prewriting: function() {
+    this._writing();
+  },
+
   _writing: function () {
     var header = this.fs.read(this.templatePath('header'));
     var common = this.fs.read(this.templatePath('common'));
     var usage = this.fs.read(this.templatePath('functions/usage'));
     var get_options = this.fs.read(this.templatePath('functions/get_options'));
+    var get_arguments = this.fs.read(this.templatePath('functions/get_arguments'));
     var main = this.fs.read(this.templatePath('main'));
 
-    var renderable = [header, common, usage, get_options, main];
+    var renderable = [header, common, usage, get_options, get_arguments, main];
 
     var rendered = [];
+
+    this.values = utils.createMockValuesMap(this.values);
 
     for (var i = 0; i < renderable.length; i++) {
       rendered.push(ejs.render(renderable[i], this.values));

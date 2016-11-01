@@ -1,6 +1,6 @@
 get_options()
 {
-    OPTSTRING="<% for(var i=0; i<options.length; i++) {%><%= options[i].varShort%>:<% } %><% for(var i=0; i<flags.length; i++) {%><%= flags[i].flagShort%><% } %>v-:"
+    OPTSTRING="<% for(var i=0; i<options.length; i++) {%><%= options[i].varShort%>:<% } %><% for(var i=0; i<flags.length; i++) {%><%= flags[i].varShort%><% } %>v-:"
     while getopts $OPTSTRING OPTION
     do
       case $OPTION in
@@ -12,10 +12,10 @@ get_options()
           ;;
 <% } -%><% } -%>
 <% for(var i=0; i<flags.length; i++) {-%>
-<% if (flags[i].flagShort.length) {-%>
-        <%= flags[i].flagShort %>)
+<% if (flags[i].varShort.length) {-%>
+        <%= flags[i].varShort %>)
           ARGSHIFT=$OPTIND
-          <%= flags[i].flagName%>=1
+          <%= flags[i].varName%>=1
           ;;
 <% } -%><% } -%>
         v)
@@ -26,9 +26,9 @@ get_options()
             help) usage && exit 0;;
             version) echo $VERSION && exit 0;;
 <% for(var i=0; i<flags.length; i++) {-%>
-<% if (flags[i].flagLong.length) {-%>
-            <%= flags[i].flagLong %>)
-              <%= flags[i].flagName%>=1
+<% if (flags[i].varLong.length) {-%>
+            <%= flags[i].varLong %>)
+              <%= flags[i].varName%>=1
               ARGSHIFT=$OPTIND
               ;;
 <% } -%><% } -%>
