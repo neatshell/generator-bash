@@ -1,24 +1,25 @@
 get_options()
 {
     OPTSTRING="<% for(var i=0; i<options.length; i++) {%><%= options[i].varShort%>:<% } %><% for(var i=0; i<flags.length; i++) {%><%= flags[i].varShort%><% } %>v-:"
-    while getopts $OPTSTRING OPTION
+    while getopts "${OPTSTRING}" OPTION
     do
-      case $OPTION in
+      case "${OPTION}" in
 <% for(var i=0; i<options.length; i++) {-%>
 <% if (options[i].varShort.length) {-%>
         <%= options[i].varShort %>)
-          ARGSHIFT=$OPTIND
+          ARGSHIFT="${OPTIND}"
           <%= options[i].varName%>=${OPTARG}
           ;;
 <% } -%><% } -%>
 <% for(var i=0; i<flags.length; i++) {-%>
 <% if (flags[i].varShort.length) {-%>
         <%= flags[i].varShort %>)
-          ARGSHIFT=$OPTIND
+          ARGSHIFT="${OPTIND}"
           <%= flags[i].varName%>=1
           ;;
 <% } -%><% } -%>
         v)
+          ARGSHIFT="${OPTIND}"
           VERBOSE=1
           ;;
         -)
@@ -29,21 +30,21 @@ get_options()
 <% if (flags[i].varLong.length) {-%>
             <%= flags[i].varLong %>)
               <%= flags[i].varName%>=1
-              ARGSHIFT=$OPTIND
+              ARGSHIFT="${OPTIND}"
               ;;
 <% } -%><% } -%>
 <% for(var i=0; i<options.length; i++) {-%>
 <% if (options[i].varLong.length) {-%>
             <%= options[i].varLong %>)
               <%= options[i].varName%>="${!OPTIND}"; OPTIND=$(( $OPTIND + 1 ))
-              ARGSHIFT=$OPTIND
+              ARGSHIFT="${OPTIND}"
               if [ -z "$<%= options[i].varName%>" ] && [ "${OPTSTRING:0:1}" != ":" ]; then
                 error "option requires an argument -- ${OPTARG}" usage 1
               fi
               ;;
             <%= options[i].varLong %>=*)
               <%= options[i].varName%>=${OPTARG#*=}
-              ARGSHIFT=$OPTIND
+              ARGSHIFT="${OPTIND}"
               if [ -z "$<%= options[i].varName%>" ] && [ "${OPTSTRING:0:1}" != ":" ]; then
               OPTNAME=${OPTARG%=$<%= options[i].varName%>}
                 error "option requires an argument -- ${OPTNAME}" usage 1

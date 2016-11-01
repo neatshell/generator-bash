@@ -1,13 +1,14 @@
 'use strict';
 
-var yeoman = require('yeoman-generator');
-var chalk = require('chalk');
-var yosay = require('yosay');
+const
+  yeoman = require('yeoman-generator'),
+  chalk = require('chalk'),
+  yosay = require('yosay'),
+  ejs = require('ejs');
 
-var ejs = require('ejs');
-
-var utils = require('../utils');
-var interpreters = require('../interpreters');
+const
+  utils = require('./utils'),
+  prompts = require('./prompts');
 
 module.exports = yeoman.Base.extend({
   prompting: function () {
@@ -15,113 +16,30 @@ module.exports = yeoman.Base.extend({
       'Welcome to the ' + chalk.red('generator-bash') + ' generator!'
     ));
 
-    var choices = Object.keys(interpreters);
-
-    var prompts = {
-      main: [
-        {
-          type: 'input',
-          name: 'scriptName',
-          message: 'Your script name'
-        },
-        {
-          type: 'input',
-          name: 'description',
-          message: 'Description'
-        },
-        {
-          type: 'list',
-          name: 'shebang',
-          message: 'What interpreter',
-          choices: choices
-        }
-
-      ],
-      options: [{
-        type: 'confirm',
-        name: 'hasOptions',
-        message: 'Has options?',
-        default: false
-      }],
-      flags: [{
-        type: 'confirm',
-        name: 'hasFlags',
-        message: 'Has flags?',
-        default: false
-      }]
-    };
-
-    var optionPrompts = [
-      {
-        type: 'input',
-        name: 'varName',
-        message: 'var name'
-      },
-      {
-        type: 'input',
-        name: 'varShort',
-        message: 'short option name'
-      },
-      {
-        type: 'input',
-        name: 'varLong',
-        message: 'long option name'
-      },
-      {
-        type: 'input',
-        name: 'varDesc',
-        message: 'description'
-      },
-      {
-        type: 'confirm',
-        name: 'hasAnotherOption',
-        message: 'Another option?',
-        default: false
-      }];
-
-    var flagPrompts = [
-      {
-        type: 'input',
-        name: 'varName',
-        message: 'flag name'
-      },
-      {
-        type: 'input',
-        name: 'varShort',
-        message: 'short flag name'
-      },
-      {
-        type: 'input',
-        name: 'varLong',
-        message: 'long flag name'
-      },
-      {
-        type: 'input',
-        name: 'varDesc',
-        message: 'description'
-      },
-      {
-        type: 'confirm',
-        name: 'hasAnotherFlag',
-        message: 'Another flag?',
-        default: false
-      }];
-
     var self = this;
     this.values = utils.createValuesMap();
     var options = this.values.options;
     var flags = this.values.flags;
+    var args = this.values.args;
+
+    function promptArgument(hasAnotherArgument) {
+      if (hasAnotherArgument) {
+        self.prompt(prompts.argPrompts)
+          .then(function (argProps) {
+            args.push(utils.createArgument(argProps));
+            promptArgument(argProps.hasAnotherArgument);
+          });
+      }
+      else {
+        promptOptions();
+      }
+    }
 
     function promptOption(hasAnotherOption) {
       if (hasAnotherOption) {
-        self.prompt(optionPrompts)
+        self.prompt(prompts.optionPrompts)
           .then(function (optionProps) {
-            options.push(utils.createOption(
-              optionProps.varName,
-              optionProps.varShort,
-              optionProps.varLong,
-              optionProps.varDesc));
-
+            options.push(utils.createOption(optionProps));
             promptOption(optionProps.hasAnotherOption);
           });
       }
@@ -132,30 +50,35 @@ module.exports = yeoman.Base.extend({
 
     function promptFlag(hasAnotherFlag) {
       if (hasAnotherFlag) {
-        self.prompt(flagPrompts)
+        self.prompt(prompts.flagPrompts)
           .then(function (flagProps) {
-            flags.push(utils.createFlag(
-              flagProps.varName,
-              flagProps.varShort,
-              flagProps.varLong,
-              flagProps.varDesc));
-
+            flags.push(utils.createFlag(flagProps));
             promptFlag(flagProps.hasAnotherFlag);
           });
       }
       else {
-        self._prewriting();
+        self._prereading();
       }
     }
 
+    function promptArguments() {
+      self.log(chalk.yellow('ARGUMENTS'));
+      self.prompt(prompts.args)
+        .then(function (props) {
+          promptArgument(props.hasArguments);
+        });
+    }
+
     function promptOptions() {
-        self.prompt(prompts.options)
-          .then(function (props) {
-            promptOption(props.hasOptions);
-          });
+      self.log(chalk.yellow('OPTIONS'));
+      self.prompt(prompts.options)
+        .then(function (props) {
+          promptOption(props.hasOptions);
+        });
     }
 
     function promptFlags() {
+      self.log(chalk.yellow('FLAGS'));
       self.prompt(prompts.flags)
         .then(function (props) {
           promptFlag(props.hasFlags);
@@ -165,38 +88,38 @@ module.exports = yeoman.Base.extend({
     return this.prompt(prompts.main)
       .then(function (props) {
 
-        this.values['shebang'] = interpreters[props.shebang];
+        this.values['shebang'] = props.shebang;
         this.values['description'] = props.description;
         this.scriptName = props.scriptName + '.sh';
 
-        promptOptions();
+        promptArguments();
 
       }.bind(this));
   },
 
-  _prewriting: function() {
-    this._writing();
+  _prereading: function () {
+    utils.prepareValues(this.values);
+    this._reading();
   },
 
-  _writing: function () {
-    var header = this.fs.read(this.templatePath('header'));
-    var common = this.fs.read(this.templatePath('common'));
-    var usage = this.fs.read(this.templatePath('functions/usage'));
-    var get_options = this.fs.read(this.templatePath('functions/get_options'));
-    var get_arguments = this.fs.read(this.templatePath('functions/get_arguments'));
-    var main = this.fs.read(this.templatePath('main'));
+  _reading: function () {
+    var templates = [
+      this.fs.read(this.templatePath('header')),
+      this.fs.read(this.templatePath('common')),
+      this.fs.read(this.templatePath('functions/usage')),
+      this.fs.read(this.templatePath('functions/get_options')),
+      this.fs.read(this.templatePath('functions/get_arguments')),
+      this.fs.read(this.templatePath('main'))];
 
-    var renderable = [header, common, usage, get_options, get_arguments, main];
+      this._writing(templates);
+  },
 
+  _writing: function (templates) {
     var rendered = [];
 
-    this.values = utils.createMockValuesMap(this.values);
-
-    for (var i = 0; i < renderable.length; i++) {
-      rendered.push(ejs.render(renderable[i], this.values));
+    for (var i = 0; i < templates.length; i++) {
+      rendered.push(ejs.render(templates[i], this.values));
     }
-
-    rendered.push('main "$@"');
 
     this.fs.write(this.destinationPath(this.scriptName), rendered.join(''));
   }
