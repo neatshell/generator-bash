@@ -6,13 +6,21 @@ get_options()
       case $OPTION in
 <% for(var i=0; i<options.length; i++) {-%>
 <% if (options[i].varShort.length) {-%>
-        <%= options[i].varShort %>) <%= options[i].varName%>=${OPTARG};;
+        <%= options[i].varShort %>)
+          ARGSHIFT=$OPTIND
+          <%= options[i].varName%>=${OPTARG}
+          ;;
 <% } -%><% } -%>
 <% for(var i=0; i<flags.length; i++) {-%>
 <% if (flags[i].flagShort.length) {-%>
-        <%= flags[i].flagShort %>) <%= flags[i].flagName%>=1;;
+        <%= flags[i].flagShort %>)
+          ARGSHIFT=$OPTIND
+          <%= flags[i].flagName%>=1
+          ;;
 <% } -%><% } -%>
-        v) VERBOSE=1;;
+        v)
+          VERBOSE=1
+          ;;
         -)
           case "${OPTARG}" in
             help) usage && exit 0;;
