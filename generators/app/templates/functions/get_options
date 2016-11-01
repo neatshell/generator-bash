@@ -27,18 +27,23 @@ get_options()
             version) echo $VERSION && exit 0;;
 <% for(var i=0; i<flags.length; i++) {-%>
 <% if (flags[i].flagLong.length) {-%>
-            <%= flags[i].flagLong %>) <%= flags[i].flagName%>=1;;
+            <%= flags[i].flagLong %>)
+              <%= flags[i].flagName%>=1
+              ARGSHIFT=$OPTIND
+              ;;
 <% } -%><% } -%>
 <% for(var i=0; i<options.length; i++) {-%>
 <% if (options[i].varLong.length) {-%>
             <%= options[i].varLong %>)
               <%= options[i].varName%>="${!OPTIND}"; OPTIND=$(( $OPTIND + 1 ))
+              ARGSHIFT=$OPTIND
               if [ -z "$<%= options[i].varName%>" ] && [ "${OPTSTRING:0:1}" != ":" ]; then
                 error "option requires an argument -- ${OPTARG}" usage 1
               fi
               ;;
             <%= options[i].varLong %>=*)
               <%= options[i].varName%>=${OPTARG#*=}
+              ARGSHIFT=$OPTIND
               if [ -z "$<%= options[i].varName%>" ] && [ "${OPTSTRING:0:1}" != ":" ]; then
               OPTNAME=${OPTARG%=$<%= options[i].varName%>}
                 error "option requires an argument -- ${OPTNAME}" usage 1
