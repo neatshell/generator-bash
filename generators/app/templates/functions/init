@@ -1,0 +1,5 @@
+init()
+{
+    get_options "$@"
+    get_arguments "$@"
+}

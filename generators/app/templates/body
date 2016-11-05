@@ -1,0 +1,22 @@
+init "$@"
+
+<% if (options.length>0) {-%>
+# INPUT OPTIONS:
+<% for(var i=0; i<options.length; i++) {-%>
+# $<%= options[i].varName -%> : <%= options[i].varDesc %>
+echo "<%= options[i].varName -%>: $<%= options[i].varName %>"
+<% } -%><% } -%>
+
+<% if (flags.length>0) {-%>
+# INPUT FLAGS:
+<% for(var i=0; i<flags.length; i++) {-%>
+# $<%= flags[i].varName -%> : <%= flags[i].varDesc %>
+echo "<%= flags[i].varName -%>: $<%= flags[i].varName %>"
+<% } -%><% } -%>
+
+<% if (args.length>0) {-%>
+# ARGS:
+<% for(var i=0; i<args.length; i++) {-%>
+# $<%= args[i].varName -%> : <%= args[i].varDesc %>
+echo "<%= args[i].varName -%>: $<%= args[i].varName %>"
+<% } -%><% } -%>

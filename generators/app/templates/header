@@ -3,3 +3,16 @@
 SCRIPT_NAME=$0
 VERSION=0.1.0
 ARGSHIFT=1
+
+<% if (options.length>0) {-%>
+<% for(var i=0; i<options.length; i++) {-%>
+<%= options[i].varName -%>=
+<% } -%><% } -%>
+<% if (flags.length>0) {-%>
+<% for(var i=0; i<flags.length; i++) {-%>
+<%= flags[i].varName -%>=
+<% } -%><% } -%>
+<% if (args.length>0) {-%>
+<% for(var i=0; i<args.length; i++) {-%>
+<%= args[i].varName -%>=
+<% } -%><% } -%>

@@ -105,11 +105,15 @@ module.exports = yeoman.Base.extend({
   _reading: function () {
     var templates = [
       this.fs.read(this.templatePath('header')),
-      this.fs.read(this.templatePath('common')),
+      this.fs.read(this.templatePath('functions/error')),
+      this.fs.read(this.templatePath('functions/log')),
+      this.fs.read(this.templatePath('functions/debug')),
       this.fs.read(this.templatePath('functions/usage')),
       this.fs.read(this.templatePath('functions/get_options')),
       this.fs.read(this.templatePath('functions/get_arguments')),
-      this.fs.read(this.templatePath('main'))];
+      this.fs.read(this.templatePath('functions/init')),
+      this.fs.read(this.templatePath('body'))
+    ];
 
       this._writing(templates);
   },
