@@ -10,14 +10,24 @@ const
   utils = require('./utils'),
   prompts = require('./prompts');
 
+var self;
+
 module.exports = yeoman.Base.extend({
+  constructor: function() {
+    yeoman.Base.apply(this, arguments);
+    this.argument('scriptName', {type: String, required: true});
+  },
+
+  initializing: function(scriptName) {
+    this.values = utils.createValuesMap(scriptName);
+    self = this;
+  },
+
   prompting: function () {
     this.log(yosay(
       'Welcome to the ' + chalk.red('generator-bash') + ' generator!'
     ));
 
-    var self = this;
-    this.values = utils.createValuesMap();
     var options = this.values.options;
     var flags = this.values.flags;
     var args = this.values.args;
@@ -87,10 +97,8 @@ module.exports = yeoman.Base.extend({
 
     return this.prompt(prompts.main)
       .then(function (props) {
-
         this.values['shebang'] = props.shebang;
         this.values['description'] = props.description;
-        this.scriptName = props.scriptName + '.sh';
 
         promptArguments();
 
@@ -125,6 +133,7 @@ module.exports = yeoman.Base.extend({
       rendered.push(ejs.render(templates[i], this.values));
     }
 
-    this.fs.write(this.destinationPath(this.scriptName), rendered.join(''));
+    this.fileName = this.destinationPath(this.values.scriptName);
+    this.fs.write(this.fileName, rendered.join(''));
   }
 });

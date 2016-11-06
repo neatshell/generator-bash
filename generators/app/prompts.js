@@ -3,11 +3,6 @@ var
   main = [
     {
       type: 'input',
-      name: 'scriptName',
-      message: 'Your script name'
-    },
-    {
-      type: 'input',
       name: 'description',
       message: 'Your script description'
     },
@@ -16,7 +11,8 @@ var
       name: 'shebang',
       message: 'What interpreter',
       choices: Object.keys(interpreters)
-    }],
+    }
+  ],
   args = [{
     type: 'confirm',
     name: 'hasArguments',
@@ -88,7 +84,7 @@ var
     }];
 
 module.exports = {
-  main: main,
+  main:  main,
   argPrompts: argPrompts,
   optionPrompts: optionPrompts,
   flagPrompts: flagPrompts,

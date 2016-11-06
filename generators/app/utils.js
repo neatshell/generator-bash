@@ -20,8 +20,9 @@ function createArgument(argProps) {
   }
 }
 
-function createValuesMap() {
+function createValuesMap(scriptName) {
   return {
+    'scriptName' : scriptName,
     'shebang': '',
     'description': '',
     'descriptions': [],
