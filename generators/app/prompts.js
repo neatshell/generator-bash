@@ -1,94 +1,89 @@
-var
-  interpreters = require('./interpreters'),
-  main = [
-    {
-      type: 'input',
-      name: 'description',
-      message: 'Your script description'
-    },
-    {
-      type: 'list',
-      name: 'shebang',
-      message: 'What interpreter',
-      choices: Object.keys(interpreters)
+const
+  chalk = require('chalk');
+
+const
+  utils = require('./utils'),
+  promptNames = require('./promptNames');
+
+function prompt(that) {
+  const done = that.async();
+  var options = that.values.options;
+  var flags = that.values.flags;
+  var args = that.values.args;
+
+  function promptArgument(hasAnotherArgument) {
+    if (hasAnotherArgument) {
+      that.prompt(promptNames.argPrompts)
+        .then(function (argProps) {
+          args.push(utils.createArgument(argProps));
+          promptArgument(argProps.hasAnotherArgument);
+        });
     }
-  ],
-  args = [{
-    type: 'confirm',
-    name: 'hasArguments',
-    message: 'Has arguments?',
-    default: false
-  }],
-  options = [{
-    type: 'confirm',
-    name: 'hasOptions',
-    message: 'Has options?',
-    default: false
-  }],
-  flags = [{
-    type: 'confirm',
-    name: 'hasFlags',
-    message: 'Has flags?',
-    default: false
-  }],
-  optionPrompts = [
-    {
-      type: 'input',
-      name: 'varName',
-      message: 'var name'
-    },
-    {
-      type: 'input',
-      name: 'varShort',
-      message: 'Option short name'
-    },
-    {
-      type: 'input',
-      name: 'varLong',
-      message: 'Option long name'
-    },
-    {
-      type: 'input',
-      name: 'varDesc',
-      message: 'Option description'
-    },
-    {
-      type: 'confirm',
-      name: 'hasAnotherOption',
-      message: 'Another option?',
-      default: false
-    }],
-  flagPrompts = [
-    optionPrompts[0],
-    optionPrompts[1],
-    optionPrompts[2],
-    optionPrompts[3],
-    {
-      type: 'confirm',
-      name: 'hasAnotherFlag',
-      message: 'Another flag?',
-      default: false
-    }],
-  argPrompts = [
-    optionPrompts[0],
-    {
-      type: 'input',
-      name: 'varDesc',
-      message: 'Argument description'
-    },
-    {
-      type: 'confirm',
-      name: 'hasAnotherArgument',
-      message: 'Another argument?',
-      default: false
-    }];
+    else {
+      promptOptions();
+    }
+  }
+
+  function promptOption(hasAnotherOption) {
+    if (hasAnotherOption) {
+      that.prompt(promptNames.optionPrompts)
+        .then(function (optionProps) {
+          options.push(utils.createOption(optionProps));
+          promptOption(optionProps.hasAnotherOption);
+        });
+    }
+    else {
+      promptFlags();
+    }
+  }
+
+  function promptFlag(hasAnotherFlag) {
+    if (hasAnotherFlag) {
+      that.prompt(promptNames.flagPrompts)
+        .then(function (flagProps) {
+          flags.push(utils.createFlag(flagProps));
+          promptFlag(flagProps.hasAnotherFlag);
+        });
+    }
+    else {
+      done();
+    }
+  }
+
+  function promptArguments(self) {
+    self.log(chalk.yellow('ARGUMENTS'));
+    self.prompt(promptNames.args)
+      .then(function (props) {
+        promptArgument(props.hasArguments);
+      });
+  }
+
+  function promptOptions() {
+    that.log(chalk.yellow('OPTIONS'));
+    that.prompt(promptNames.options)
+      .then(function (props) {
+        promptOption(props.hasOptions);
+      });
+  }
+
+  function promptFlags() {
+    that.log(chalk.yellow('FLAGS'));
+    that.prompt(promptNames.flags)
+      .then(function (props) {
+        promptFlag(props.hasFlags);
+      });
+  }
+
+  that.prompt(promptNames.main)
+    .then(function (props) {
+      that.values['shebang'] = props.shebang;
+      that.values['description'] = props.description;
+
+      promptArguments(that);
+
+    }.bind(that));
+}
 
 module.exports = {
-  main:  main,
-  argPrompts: argPrompts,
-  optionPrompts: optionPrompts,
-  flagPrompts: flagPrompts,
-  args: args,
-  options: options,
-  flags: flags
+  prompt: prompt
 };

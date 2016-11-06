@@ -21,88 +21,11 @@ module.exports = yeoman.Base.extend({
   },
 
   prompting: function () {
-    var done = this.async();
-    var self = this;
-
     this.log(yosay(
       'Welcome to the ' + chalk.red('generator-bash') + ' generator!'
     ));
 
-    var options = this.values.options;
-    var flags = this.values.flags;
-    var args = this.values.args;
-
-    function promptArgument(hasAnotherArgument) {
-      if (hasAnotherArgument) {
-        self.prompt(prompts.argPrompts)
-          .then(function (argProps) {
-            args.push(utils.createArgument(argProps));
-            promptArgument(argProps.hasAnotherArgument);
-          });
-      }
-      else {
-        promptOptions();
-      }
-    }
-
-    function promptOption(hasAnotherOption) {
-      if (hasAnotherOption) {
-        self.prompt(prompts.optionPrompts)
-          .then(function (optionProps) {
-            options.push(utils.createOption(optionProps));
-            promptOption(optionProps.hasAnotherOption);
-          });
-      }
-      else {
-        promptFlags();
-      }
-    }
-
-    function promptFlag(hasAnotherFlag) {
-      if (hasAnotherFlag) {
-        self.prompt(prompts.flagPrompts)
-          .then(function (flagProps) {
-            flags.push(utils.createFlag(flagProps));
-            promptFlag(flagProps.hasAnotherFlag);
-          });
-      }
-      else {
-        done();
-      }
-    }
-
-    function promptArguments() {
-      self.log(chalk.yellow('ARGUMENTS'));
-      self.prompt(prompts.args)
-        .then(function (props) {
-          promptArgument(props.hasArguments);
-        });
-    }
-
-    function promptOptions() {
-      self.log(chalk.yellow('OPTIONS'));
-      self.prompt(prompts.options)
-        .then(function (props) {
-          promptOption(props.hasOptions);
-        });
-    }
-
-    function promptFlags() {
-      self.log(chalk.yellow('FLAGS'));
-      self.prompt(prompts.flags)
-        .then(function (props) {
-          promptFlag(props.hasFlags);
-        });
-    }
-
-    this.prompt(prompts.main)
-      .then(function (props) {
-        this.values['shebang'] = props.shebang;
-        this.values['description'] = props.description;
-
-        promptArguments();
-
-      }.bind(this));
+    prompts.prompt(this);
   },
 
   configuring: function() {
