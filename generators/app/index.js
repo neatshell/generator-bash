@@ -10,8 +10,6 @@ const
   utils = require('./utils'),
   prompts = require('./prompts');
 
-var self;
-
 module.exports = yeoman.Base.extend({
   constructor: function() {
     yeoman.Base.apply(this, arguments);
@@ -20,10 +18,12 @@ module.exports = yeoman.Base.extend({
 
   initializing: function(scriptName) {
     this.values = utils.createValuesMap(scriptName);
-    self = this;
   },
 
   prompting: function () {
+    var done = this.async();
+    var self = this;
+
     this.log(yosay(
       'Welcome to the ' + chalk.red('generator-bash') + ' generator!'
     ));
@@ -67,7 +67,7 @@ module.exports = yeoman.Base.extend({
           });
       }
       else {
-        self._prereading();
+        done();
       }
     }
 
@@ -95,7 +95,7 @@ module.exports = yeoman.Base.extend({
         });
     }
 
-    return this.prompt(prompts.main)
+    this.prompt(prompts.main)
       .then(function (props) {
         this.values['shebang'] = props.shebang;
         this.values['description'] = props.description;
@@ -105,13 +105,9 @@ module.exports = yeoman.Base.extend({
       }.bind(this));
   },
 
-  _prereading: function () {
+  configuring: function() {
     utils.prepareValues(this.values);
-    this._reading();
-  },
-
-  _reading: function () {
-    var templates = [
+    this.templates = [
       this.fs.read(this.templatePath('header')),
       this.fs.read(this.templatePath('functions/error')),
       this.fs.read(this.templatePath('functions/log')),
@@ -122,15 +118,13 @@ module.exports = yeoman.Base.extend({
       this.fs.read(this.templatePath('functions/init')),
       this.fs.read(this.templatePath('body'))
     ];
-
-      this._writing(templates);
   },
 
-  _writing: function (templates) {
+  writing: function () {
     var rendered = [];
 
-    for (var i = 0; i < templates.length; i++) {
-      rendered.push(ejs.render(templates[i], this.values));
+    for (var i = 0; i < this.templates.length; i++) {
+      rendered.push(ejs.render(this.templates[i], this.values));
     }
 
     this.fileName = this.destinationPath(this.values.scriptName);
