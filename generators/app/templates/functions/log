@@ -1,5 +1,5 @@
 # print log message
 log ()
 {
-    echo "${SCRIPT_NAME}: $1" > /dev/stderr
+    echo "${_SCRIPT_NAME}: $1" > /dev/stderr
 }

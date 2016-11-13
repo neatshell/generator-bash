@@ -1,13 +1,13 @@
 get_arguments()
 {
-    ARGS="<% for(var i=0; i<args.length; i++) {-%><%= args[i].varName%><% if ((i+1)<args.length) {-%> <% } -%><% } -%>"
+    _ARGS="<% for(var i=0; i<args.length; i++) {-%><%= args[i].varName%><% if ((i+1)<args.length) {-%> <% } -%><% } -%>"
 
-    shift $(( ARGSHIFT - 1 ))
+    shift $(( _ARGSHIFT - 1 ))
 
-    for ARG in $ARGS
+    for _ARG in $_ARGS
     do
       if [ ! -z "$1" ]; then
-        eval "$ARG=$1"
+        eval "$_ARG=$1"
       fi
       shift
     done

@@ -1,64 +1,64 @@
 get_options()
 {
-    SILENT=
-    OPTSTRING="${SILENT}<% for(var i=0; i<options.length; i++) {%><%= options[i].varShort%>:<% } %><% for(var i=0; i<flags.length; i++) {%><%= flags[i].varShort%><% } %>v-:"
-    while getopts "${OPTSTRING}" OPTION
+    _SILENT=
+    _OPTSTRING="${_SILENT}<% for(var i=0; i<options.length; i++) {%><%= options[i].varShort%>:<% } %><% for(var i=0; i<flags.length; i++) {%><%= flags[i].varShort%><% } %>v-:"
+    while getopts "${_OPTSTRING}" _OPTION
     do
-      case "${OPTION}" in
+      case "${_OPTION}" in
 <% for(var i=0; i<options.length; i++) {-%>
 <% if (options[i].varShort.length) {-%>
         <%= options[i].varShort %>)
-          ARGSHIFT="${OPTIND}"
+          _ARGSHIFT="${OPTIND}"
           <%= options[i].varName%>=${OPTARG}
           ;;
 <% } -%><% } -%>
 <% for(var i=0; i<flags.length; i++) {-%>
 <% if (flags[i].varShort.length) {-%>
         <%= flags[i].varShort %>)
-          ARGSHIFT="${OPTIND}"
+          _ARGSHIFT="${OPTIND}"
           <%= flags[i].varName%>=1
           ;;
 <% } -%><% } -%>
         v)
-          ARGSHIFT="${OPTIND}"
-          VERBOSE=1
+          _ARGSHIFT="${OPTIND}"
+          _VERBOSE=1
           ;;
         -)
           case "${OPTARG}" in
             help) usage && exit 0;;
-            version) echo $VERSION && exit 0;;
+            version) echo "$_VERSION" && exit 0;;
 <% for(var i=0; i<flags.length; i++) {-%>
 <% if (flags[i].varLong.length) {-%>
             <%= flags[i].varLong %>)
               <%= flags[i].varName%>=1
-              ARGSHIFT="${OPTIND}"
+              _ARGSHIFT="${OPTIND}"
               ;;
 <% } -%><% } -%>
 <% for(var i=0; i<options.length; i++) {-%>
 <% if (options[i].varLong.length) {-%>
             <%= options[i].varLong %>)
               eval <%= options[i].varName%>="\$$OPTIND"; OPTIND=$(( OPTIND + 1 ))
-              ARGSHIFT="${OPTIND}"
-              if [ -z "$<%= options[i].varName%>" ] && [ -z "$SILENT" ]; then
+              _ARGSHIFT="${OPTIND}"
+              if [ -z "$<%= options[i].varName%>" ] && [ -z "$_SILENT" ]; then
                 error "option requires an argument -- ${OPTARG}" usage 1
               fi
               ;;
             <%= options[i].varLong %>=*)
               <%= options[i].varName%>=${OPTARG#*=}
-              ARGSHIFT="${OPTIND}"
-              if [ -z "$<%= options[i].varName%>" ] && [ -z "$SILENT" ]; then
-              OPTNAME=${OPTARG%=$<%= options[i].varName%>}
-                error "option requires an argument -- ${OPTNAME}" usage 1
+              _ARGSHIFT="${OPTIND}"
+              if [ -z "$<%= options[i].varName%>" ] && [ -z "$_SILENT" ]; then
+              _OPTNAME=${OPTARG%=$<%= options[i].varName%>}
+                error "option requires an argument -- ${_OPTNAME}" usage 1
               fi
               ;;
 <% } -%><% } -%>
             *)
-              if [ "$OPTERR" = 1 ] && [ -z "$SILENT" ]; then
+              if [ "$OPTERR" = 1 ] && [ -z "$_SILENT" ]; then
                 error "illegal option -- ${OPTARG}" usage 1
               fi
               ;;
             esac;;
-       \?) [ -z "$SILENT" ] && usage && exit 1;;
+       \?) [ -z "$_SILENT" ] && usage && exit 1;;
       esac
     done
 }

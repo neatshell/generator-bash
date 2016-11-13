@@ -1,8 +1,8 @@
 #<%= shebang %>
 
-SCRIPT_NAME=$0
-VERSION=0.1.0
-ARGSHIFT=1
+_SCRIPT_NAME=$0
+_VERSION=0.1.0
+_ARGSHIFT=1
 
 <% if (options.length>0) {-%>
 <% for(var i=0; i<options.length; i++) {-%>
