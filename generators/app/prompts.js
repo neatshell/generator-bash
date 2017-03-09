@@ -74,7 +74,10 @@ function prompt(that) {
       });
   }
 
-  that.prompt(promptNames.main)
+  var mainPrompt = promptNames.main;
+  mainPrompt[0].default = that.values['description'];
+
+  that.prompt(mainPrompt)
     .then(function (props) {
       that.values['shebang'] = props.shebang;
       that.values['description'] = props.description;

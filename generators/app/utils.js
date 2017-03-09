@@ -1,4 +1,4 @@
-var interpeters = require('./interpreters');
+const interpreters = require('./interpreters');
 
 function createOption(optionProps) {
   return {
@@ -56,7 +56,7 @@ function createOptionDescription(optName, optShort, optLong, optDesc) {
 }
 
 function prepareValues(values) {
-  values['shebang'] = interpeters[values.shebang];
+  values['shebang'] = interpreters[values.shebang];
   return values;
 }
 

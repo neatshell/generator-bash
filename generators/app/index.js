@@ -17,14 +17,13 @@ module.exports = yeoman.Base.extend({
   },
 
   initializing: function(scriptName) {
-    this.values = utils.createValuesMap(scriptName);
+    this.values = this.config.get('values') || utils.createValuesMap(scriptName);
   },
 
   prompting: function () {
     this.log(yosay(
       'Welcome to the ' + chalk.red('generator-bash') + ' generator!'
     ));
-
     prompts.prompt(this);
   },
 
@@ -45,6 +44,8 @@ module.exports = yeoman.Base.extend({
 
   writing: function () {
     var rendered = [];
+    this.config.set('values', this.values);
+    this.config.save();
 
     for (var i = 0; i < this.templates.length; i++) {
       rendered.push(ejs.render(this.templates[i], this.values));
