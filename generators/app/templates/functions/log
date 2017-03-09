@@ -1,5 +1,4 @@
 # print log message
-log ()
-{
+log() {
     echo "${_SCRIPT_NAME}: $1" > /dev/stderr
 }

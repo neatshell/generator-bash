@@ -1,5 +1,4 @@
 # print debug message if script called with verbose mode
-debug()
-{
+debug() {
     [ "$_VERBOSE" ] && echo "${_SCRIPT_NAME}: $1" > /dev/stderr
 }

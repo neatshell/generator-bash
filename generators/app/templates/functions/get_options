@@ -1,5 +1,4 @@
-get_options()
-{
+get_options() {
     _SILENT=
     _OPTSTRING="${_SILENT}<% for(var i=0; i<options.length; i++) {%><%= options[i].varShort%>:<% } %><% for(var i=0; i<flags.length; i++) {%><%= flags[i].varShort%><% } %>v-:"
     while getopts "${_OPTSTRING}" _OPTION

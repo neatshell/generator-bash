@@ -1,5 +1,4 @@
-get_arguments()
-{
+get_arguments() {
     _ARGS="<% for(var i=0; i<args.length; i++) {-%><%= args[i].varName%><% if ((i+1)<args.length) {-%> <% } -%><% } -%>"
 
     shift $(( _ARGSHIFT - 1 ))

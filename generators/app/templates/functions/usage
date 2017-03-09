@@ -1,5 +1,4 @@
-usage()
-{
+usage() {
 cat << EOF
 usage: $0 [-v<% for(var i=0; i<flags.length; i++) {-%><%= flags[i].varShort -%><% } -%>]<% for(var i=0; i<options.length; i++) {-%>[-<%= options[i].varShort -%> VALUE] <% } -%><% for(var i=0; i<args.length; i++) {-%> <%= args[i].varName %> <% } -%>
 
