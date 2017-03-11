@@ -1,4 +1,4 @@
 module.exports = {
-  'sh': '!/usr/bin/env sh',
-  'bash': '!/usr/bin/env bash'
+  'bash': '!/usr/bin/env bash',
+  'sh': '!/usr/bin/env sh'
 };
