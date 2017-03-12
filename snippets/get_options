@@ -1,5 +1,5 @@
 get_options() {
-    _SILENT=
+    _SILENT=<% if (silent) {%>:<%}%>
     _OPTSTRING="${_SILENT}<% for(var i=0; i<options.length; i++) {%><%= options[i].varShort%>:<% } %><% for(var i=0; i<flags.length; i++) {%><%= flags[i].varShort%><% } %>v-:"
     while getopts "${_OPTSTRING}" _OPTION
     do
@@ -57,7 +57,20 @@ get_options() {
               fi
               ;;
             esac;;
-       \?) [ -z "$_SILENT" ] && usage && exit 1;;
+       \?)
+          # VERBOSE MODE
+          # invalid option: _OPTION is set to ? (question-mark) and OPTARG is unset
+          # required argument not found: _OPTION is set to ? (question-mark), OPTARG is unset and an error message is printed
+          [ -z "$_SILENT" ] && usage && exit 1
+          # SILENT MODE
+          # invalid option: _OPTION is set to ? (question-mark) and OPTARG is set to the (invalid) option character
+          [ ! -z "$_SILENT" ] && echo "illegal option -- ${OPTARG}"
+          ;;
+        :)
+          # SILENT MODE
+          # required argument not found: _OPTION is set to : (colon) and OPTARG contains the option-character in question
+          echo "option requires an argument -- ${OPTARG}"
+          ;;
       esac
     done
 }

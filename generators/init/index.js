@@ -6,9 +6,23 @@ const
   fs = require('fs');
 
 module.exports = class extends Generator {
+  constructor(args, opts) {
+    super(args, opts);
+    this.argument('scriptName', {
+      required: true,
+      type: String
+    });
+    this.option('silent', {
+      alias: 's',
+      default: false,
+      description: 'Whether to enable silent mode for getopts',
+      hide: false,
+      type: Boolean
+    });
+  }
+
   initializing(scriptName, that) {
-    this.argument('scriptName', {type: String, required: true});
-    this.values = utils.createValuesMap(scriptName);
+    this.values = utils.createValuesMap(this);
     const TARGET_DIR = utils.getDir(this, scriptName);
     const SOURCE_DIR = this.templatePath('../../../snippets/');
     const PREFIX = utils.getPrefix();
