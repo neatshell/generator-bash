@@ -6,14 +6,29 @@ const Generator = require('yeoman-generator'),
   promptNames = require('../promptNames');
 
 module.exports = class extends Generator {
+  constructor(args, opts) {
+    super(args, opts);
+    this.argument('scriptName', {
+      required: true,
+      type: String
+    });
+    this.option('silent', {
+      alias: 's',
+      default: false,
+      description: 'Whether to enable silent mode for getopts',
+      hide: false,
+      type: Boolean
+    });
+  }
+
   initializing(scriptName) {
-    this.argument('scriptName', {type: String, required: true});
     const values = this.config.get(scriptName);
     if (!values) {
       const that = this;
       const done = that.async();
       that.composeWith(require.resolve('../init'), {
-        arguments: [scriptName, that]
+        arguments: [scriptName, that],
+        silent: that.options.silent
       });
       done();
     } else {
@@ -23,7 +38,7 @@ module.exports = class extends Generator {
 
   prompting(scriptName) {
     this.log(yosay(
-      'Welcome to the ' + chalk.red('generator-bash') + ' generator!'
+      'Welcome to the ' + chalk.yellow.bold('generator-bash') + ' generator!'
     ));
 
     const that = this;

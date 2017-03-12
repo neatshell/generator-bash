@@ -23,10 +23,12 @@ function createArgument(argProps) {
   }
 }
 
-function createValuesMap(scriptName) {
+function createValuesMap(that) {
+  const scriptName = that.args[0];
   return {
     'scriptName' : scriptName,
     'shebang': '',
+    'silent': that.options.silent,
     'description': '',
     'templates' : templates,
     'snippets' : snippets,
