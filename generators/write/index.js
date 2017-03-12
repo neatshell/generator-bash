@@ -7,7 +7,7 @@ const
   ejs = require('ejs');
 
 module.exports = class extends Generator {
-  initializing(scriptName, that) {
+  initializing(scriptName) {
     this.argument('scriptName', {type: String, required: true});
     const values = this.config.get(scriptName);
     if (!values) {
@@ -37,5 +37,9 @@ module.exports = class extends Generator {
 
   writing(scriptName) {
     this.fs.write(scriptName, this.compiled.join('\n'));
+  }
+
+  end(scriptName) {
+    fs.chmodSync(scriptName, '755');
   }
 };
