@@ -1,7 +1,7 @@
 {
   "name": "generator-bash",
   "version": "0.4.0",
-  "description": "A yeoman generator to scaffold out a nice shell script capable of handling flags, options and parameters",
+  "description": "A yeoman generator to scaffold out a nice shell script capable of handling flags, options and arguments",
   "homepage": "",
   "author": {
     "name": "Claudio Stella",
@@ -24,7 +24,7 @@
     "yeoman-generator"
   ],
   "dependencies": {
-    "yeoman-generator": "^0.23.0",
+    "yeoman-generator": "^1.0.0",
     "chalk": "^1.0.0",
     "yosay": "^1.0.0"
   },

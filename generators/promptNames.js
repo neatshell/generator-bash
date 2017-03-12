@@ -1,7 +1,4 @@
 const
-  interpreters = require('./interpreters');
-
-var
   main = [
     {
       type: 'input',
@@ -12,7 +9,7 @@ var
       type: 'list',
       name: 'shebang',
       message: 'What interpreter',
-      choices: Object.keys(interpreters)
+      choices: require('./interpreters')
     }
   ],
   args = [{
