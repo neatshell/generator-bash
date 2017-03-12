@@ -1,5 +1,4 @@
 const
-  interpreters = require('./interpreters'),
   templates = require('./templates'),
   snippets = require('./snippets'),
   ejs = require('ejs');
@@ -29,7 +28,6 @@ function createValuesMap(scriptName) {
     'scriptName' : scriptName,
     'shebang': '',
     'description': '',
-    'descriptions': [],
     'templates' : templates,
     'snippets' : snippets,
     'options': [],
@@ -61,19 +59,12 @@ function createOptionDescription(optName, optShort, optLong, optDesc) {
   }
 }
 
-function prepare(generator) {
-  const values = generator.values;
-  const templates = generator.templates;
-  const dir = values.dir;
-  values['shebang'] = interpreters[values.shebang];
+function getPrefix() {
+  return '.';
+}
 
-  templates.forEach((template) => {
-    const file = generator.fs.read(template.fileName);
-    const rendered = ejs.render(file, generator.values);
-    generator.fs.write(`${dir}/${template.name}`, rendered);
-  });
-
-  return generator;
+function getDir(generator, scriptName) {
+  return generator.destinationPath(`${getPrefix()}${scriptName}/`);
 }
 
 module.exports = {
@@ -81,5 +72,6 @@ module.exports = {
   createOption: createOption,
   createFlag: createFlag,
   createValuesMap: createValuesMap,
-  prepare: prepare
+  getDir: getDir,
+  getPrefix: getPrefix
 };

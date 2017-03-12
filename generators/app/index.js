@@ -1,57 +1,64 @@
 'use strict';
 
-const
-  yeoman = require('yeoman-generator'),
+const Generator = require('yeoman-generator'),
   chalk = require('chalk'),
   yosay = require('yosay'),
-  ejs = require('ejs');
+  promptNames = require('../promptNames');
 
-const
-  utils = require('./utils'),
-  prompts = require('./prompts');
-
-module.exports = yeoman.Base.extend({
-  constructor: function() {
-    yeoman.Base.apply(this, arguments);
+module.exports = class extends Generator {
+  initializing(scriptName) {
     this.argument('scriptName', {type: String, required: true});
-  },
+    const values = this.config.get(scriptName);
+    if (!values) {
+      const that = this;
+      const done = that.async();
+      that.composeWith(require.resolve('../init'), {
+        arguments: [scriptName, that]
+      });
+      done();
+    } else {
+      this.values = values;
+    }
+  }
 
-  initializing: function(scriptName) {
-    this.values = this.config.get('values') || utils.createValuesMap(scriptName);
-  },
-
-  prompting: function () {
+  prompting(scriptName) {
     this.log(yosay(
       'Welcome to the ' + chalk.red('generator-bash') + ' generator!'
     ));
-    prompts.prompt(this);
-  },
 
-  configuring: function() {
-    utils.prepareValues(this.values);
-    this.templates = [
-      this.fs.read(this.templatePath('header')),
-      this.fs.read(this.templatePath('functions/error')),
-      this.fs.read(this.templatePath('functions/log')),
-      this.fs.read(this.templatePath('functions/debug')),
-      this.fs.read(this.templatePath('functions/usage')),
-      this.fs.read(this.templatePath('functions/get_options')),
-      this.fs.read(this.templatePath('functions/get_arguments')),
-      this.fs.read(this.templatePath('functions/init')),
-      this.fs.read(this.templatePath('body'))
-    ];
-  },
+    const that = this;
+    const done = that.async();
+    const mainPrompt = promptNames.main;
 
-  writing: function () {
-    var rendered = [];
-    this.config.set('values', this.values);
-    this.config.save();
+    mainPrompt[0].default = that.values['description'];
 
-    for (var i = 0; i < this.templates.length; i++) {
-      rendered.push(ejs.render(this.templates[i], this.values));
-    }
+    that.prompt(mainPrompt)
+      .then(function (props) {
+        that.values['shebang'] = props.shebang;
+        that.values['description'] = props.description;
 
-    this.fileName = this.destinationPath(this.values.scriptName);
-    this.fs.write(this.fileName, rendered.join(''));
+        that.composeWith(require.resolve('../argument'), {
+          arguments: [scriptName, that.values]
+        });
+        that.composeWith(require.resolve('../option'), {
+          arguments: [scriptName, that.values]
+        });
+        that.composeWith(require.resolve('../flag'), {
+          arguments: [scriptName, that.values]
+        });
+
+        done();
+      }.bind(that));
   }
-});
+
+  configuring(scriptName) {
+    this.config.set(scriptName, this.values);
+    this.config.save();
+  }
+
+  writing(scriptName) {
+    this.composeWith(require.resolve('../write'), {
+      arguments: [scriptName]
+    });
+  }
+};

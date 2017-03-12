@@ -13,19 +13,24 @@ module.exports = class extends Generator {
     const SOURCE_DIR = this.templatePath('../../../snippets/');
     const PREFIX = utils.getPrefix();
     const templates = this.values.templates;
+    const snippets = this.values.snippets;
 
     //create the not-existent dir
     if (!fs.existsSync(TARGET_DIR)) {
       fs.mkdirSync(TARGET_DIR);
     }
 
-    this.values.snippets.forEach((snippet) => {
+    snippets.forEach((snippet, snippetIndex) => {
       let filename = '';
-      if (templates.indexOf(snippet) >= 0) {
+      const templateIndex = templates.indexOf(snippet);
+      if (templateIndex >= 0) {
         filename = filename + PREFIX;
+        templates[templateIndex] = filename + snippet;
+        snippets[snippetIndex] = filename + snippet;
       }
       filename = filename + snippet;
-      fs.linkSync(SOURCE_DIR + snippet, TARGET_DIR + filename);
+      const data = fs.readFileSync(SOURCE_DIR + snippet);
+      fs.writeFileSync(TARGET_DIR + filename, data);
     });
     if (that) {
       that.values = this.values;
