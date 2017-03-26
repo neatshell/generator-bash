@@ -1,7 +1,7 @@
 #<%= shebang %>
 
 _SCRIPT_NAME=$0
-_VERSION=0.1.0
+_VERSION=<%= version.major -%>.<%= version.minor -%>.<%= version.patch %>
 _ARGSHIFT=1
 
 <% if (options.length>0) {-%>
