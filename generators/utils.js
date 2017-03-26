@@ -34,7 +34,12 @@ function createValuesMap(that) {
     'snippets' : snippets,
     'options': [],
     'flags': [],
-    'args': []
+    'args': [],
+    'version': {
+      'major' : 0,
+      'minor': 1,
+      'patch': 0
+    }
   }
 }
 
