@@ -1,8 +1,3 @@
-const
-  templates = require('./templates'),
-  snippets = require('./snippets'),
-  ejs = require('ejs');
-
 function createOption(optionProps) {
   return {
     varName: optionProps.varName,
@@ -40,29 +35,6 @@ function createValuesMap(that) {
       'minor': 1,
       'patch': 0
     }
-  }
-}
-
-function createOptionDescription(optName, optShort, optLong, optDesc) {
-  function notEmpty(string) {
-    return string && string.length;
-  }
-
-  var optionDescription = {};
-  if (notEmpty(optShort) && notEmpty(optLong)) {
-    optionDescription.left = '-' + optShort + ', --' + optLong;
-    optionDescription.right = optDesc;
-    return optionDescription;
-  }
-  if (notEmpty(optShort) && !notEmpty(optLong)) {
-    optionDescription.left = '-' + optShort;
-    optionDescription.right = optDesc;
-    return optionDescription;
-  }
-  if (!notEmpty(optShort) && notEmpty(optLong)) {
-    optionDescription.left = '--' + optLong;
-    optionDescription.right = optDesc;
-    return optionDescription;
   }
 }
 
