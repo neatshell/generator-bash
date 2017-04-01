@@ -1,6 +1,6 @@
 get_options() {
     _SILENT=<% if (silent) {%>:<%}%>
-    _OPTSTRING="${_SILENT}<% for(var i=0; i<options.length; i++) {%><%= options[i].varShort%>:<% } %><% for(var i=0; i<flags.length; i++) {%><%= flags[i].varShort%><% } %>v-:"
+    _OPTSTRING="${_SILENT}<% for(var i=0; i<options.length; i++) {%><%= options[i].varShort%>:<% } %><% for(var i=0; i<flags.length; i++) {%><%= flags[i].varShort%><% } %>-:"
     while getopts "${_OPTSTRING}" _OPTION
     do
       case "${_OPTION}" in
@@ -18,10 +18,6 @@ get_options() {
           <%= flags[i].varName%>=1
           ;;
 <% } -%><% } -%>
-        v)
-          _ARGSHIFT="${OPTIND}"
-          _VERBOSE=1
-          ;;
         -)
           case "${OPTARG}" in
             help) usage && exit 0;;

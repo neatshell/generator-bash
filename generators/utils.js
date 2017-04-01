@@ -1,3 +1,7 @@
+const
+  templates = require('./templates'),
+  snippets = require('./snippets');
+
 function createOption(optionProps) {
   return {
     varName: optionProps.varName,
@@ -19,7 +23,14 @@ function createArgument(argProps) {
 }
 
 function createValuesMap(that) {
-  const scriptName = that.args[0];
+  const scriptName = that.args[0],
+        verboseFlag = {
+    varName: '_VERBOSE',
+    varShort: 'v',
+    varLong: 'verbose',
+    varDesc: 'Enable verbose mode'
+  };
+
   return {
     'scriptName' : scriptName,
     'shebang': '',
@@ -28,7 +39,7 @@ function createValuesMap(that) {
     'templates' : templates,
     'snippets' : snippets,
     'options': [],
-    'flags': [],
+    'flags': [verboseFlag],
     'args': [],
     'version': {
       'major' : 0,
