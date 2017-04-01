@@ -10,19 +10,13 @@ usage: $0 [-v<% for(var i=0; i<flags.length; i++) {-%><%= flags[i].varShort -%><
 
 <% if (options.length>0) {-%>Options:
 <% for(var i=0; i<options.length; i++) {-%>
-<% if (options[i].varShort.length) {-%>-<%= options[i].varShort -%><% } -%><% if (options[i].varShort.length && options[i].varLong.length) {-%>, --<%= options[i].varLong -%><% } -%>
-<% if (!options[i].varShort.length && options[i].varLong.length) {-%>--<%= options[i].varLong -%><% } -%>
-   <%= options[i].varDesc -%>
-
+<%= options[i].varUsage %>
 <% } -%>
 <% } -%>
 
 <% if (flags.length>0) {-%>Flags:
 <% for(var i=0; i<flags.length; i++) {-%>
-<% if (flags[i].varShort.length) {-%>-<%= flags[i].varShort -%><% } -%><% if (flags[i].varShort.length && flags[i].varLong.length) {-%>, --<%= flags[i].varLong -%><% } -%>
-<% if (!flags[i].varShort.length && flags[i].varLong.length) {-%>--<%= flags[i].varLong -%><% } -%>
-   <%= flags[i].varDesc -%>
-
+<%= flags[i].varUsage %>
 <% } -%>
 <% } -%>
 
