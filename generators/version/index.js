@@ -55,4 +55,10 @@ module.exports = class extends Generator {
     }
     this.config.set(scriptName, this.values);
   }
+
+  writing(scriptName) {
+    this.composeWith(require.resolve('../write'), {
+      arguments: [scriptName]
+    });
+  }
 };
