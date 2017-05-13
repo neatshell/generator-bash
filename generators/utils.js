@@ -1,6 +1,6 @@
 const
-  templates = require('./templates'),
-  snippets = require('./snippets');
+  templates = require('./snippets').templates,
+  snippets = require('./snippets').snippets;
 
 function createOption(optionProps) {
   return {

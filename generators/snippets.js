@@ -1,3 +1,5 @@
-const snippetNames = ['header', 'error', 'log', 'debug', 'usage', 'get_options', 'get_arguments', 'init', 'body'];
-
-module.exports = snippetNames;
+module.exports = {
+  'snippets': ['header', 'error', 'log', 'debug', 'usage', 'get_options', 'get_arguments', 'init', 'body'],
+  'templates': ['header', 'usage', 'get_options', 'get_arguments', 'body'],
+  'hidden': ['header', 'error', 'log', 'debug', 'usage', 'get_options', 'get_arguments', 'init']
+};

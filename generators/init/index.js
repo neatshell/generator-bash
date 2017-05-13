@@ -1,8 +1,8 @@
 const
   Generator = require('yeoman-generator'),
-  chalk = require('chalk'),
   utils = require('../utils'),
   promptNames = require('../promptNames'),
+  hiddenSnippets = require('../snippets').hidden,
   fs = require('fs');
 
 module.exports = class extends Generator {
@@ -36,16 +36,20 @@ module.exports = class extends Generator {
 
     snippets.forEach((snippet, snippetIndex) => {
       let filename = '';
+      if (hiddenSnippets.indexOf(snippet) >= 0) {
+        filename = PREFIX;
+      }
+      filename += snippet;
+
       const templateIndex = templates.indexOf(snippet);
       if (templateIndex >= 0) {
-        filename = filename + PREFIX;
-        templates[templateIndex] = filename + snippet;
-        snippets[snippetIndex] = filename + snippet;
+        templates[templateIndex] = filename;
       }
-      filename = filename + snippet;
+      snippets[snippetIndex] = filename;
       const data = fs.readFileSync(SOURCE_DIR + snippet);
       fs.writeFileSync(TARGET_DIR + filename, data);
     });
+
     if (that) {
       that.values = this.values;
     }
