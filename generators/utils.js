@@ -1,6 +1,7 @@
 const
   templates = require('./snippets').templates,
-  snippets = require('./snippets').snippets;
+  snippets = require('./snippets').snippets,
+  interpreters = require('./interpreters');
 
 function createOption(optionProps) {
   return {
@@ -33,7 +34,7 @@ function createValuesMap(that) {
 
   return {
     'scriptName' : scriptName,
-    'shebang': '',
+    'shebang': interpreters[0].value,
     'silent': that.options.silent,
     'description': '',
     'templates' : templates,
