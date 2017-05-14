@@ -17,9 +17,9 @@ module.exports = class extends Generator {
   }
 
   prompting(scriptName, values) {
-    this.log(chalk.yellow('FLAGS'));
     const that = this;
     const done = that.async();
+    const standalone = !values;
     values = values || this.values;
 
     function promptFlag(hasAnotherFlag) {
@@ -34,10 +34,15 @@ module.exports = class extends Generator {
       }
     }
 
-    this.prompt(promptNames.flags)
-      .then(function (props) {
-        promptFlag(props.hasFlags);
-      }.bind(this));
+    if (standalone) {
+      promptFlag(true);
+    } else {
+      this.log(chalk.yellow('FLAGS'));
+      this.prompt(promptNames.flags)
+        .then(function (props) {
+          promptFlag(props.hasFlags);
+        }.bind(this));
+    }
   }
 
   configuring(scriptName, values) {

@@ -17,9 +17,9 @@ module.exports = class extends Generator {
   }
 
   prompting(scriptName, values) {
-    this.log(chalk.yellow('ARGUMENTS'));
     const that = this;
     const done = this.async();
+    const standalone = !values;
     values = values || this.values;
 
     function promptArgument(hasAnotherArgument) {
@@ -34,10 +34,15 @@ module.exports = class extends Generator {
       }
     }
 
-    this.prompt(promptNames.args)
-      .then(function (props) {
-        promptArgument(props.hasArguments);
-      }.bind(this));
+    if (standalone) {
+      promptArgument(true);
+    } else {
+      this.log(chalk.yellow('ARGUMENTS'));
+      this.prompt(promptNames.args)
+        .then(function (props) {
+          promptArgument(props.hasArguments);
+        }.bind(this));
+    }
   }
 
   configuring(scriptName, values) {

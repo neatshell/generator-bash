@@ -17,9 +17,9 @@ module.exports = class extends Generator {
   }
 
   prompting(scriptName, values) {
-    this.log(chalk.yellow('OPTIONS'));
     const that = this;
     const done = this.async();
+    const standalone = !values;
     values = values || this.values;
 
     function promptOption(hasAnotherOption) {
@@ -34,10 +34,16 @@ module.exports = class extends Generator {
       }
     }
 
-    this.prompt(promptNames.options)
-      .then(function (props) {
-        promptOption(props.hasOptions);
-      }.bind(this));
+    if (standalone) {
+      promptOption(true);
+    } else {
+      this.log(chalk.yellow('OPTIONS'));
+
+      this.prompt(promptNames.options)
+        .then(function (props) {
+          promptOption(props.hasOptions);
+        }.bind(this));
+    }
   }
 
   configuring(scriptName, values) {
