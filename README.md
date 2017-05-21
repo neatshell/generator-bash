@@ -1,5 +1,6 @@
 # generator-bash [![NPM version][npm-image]][npm-url] [![Dependency Status][daviddm-image]][daviddm-url]
-A generator to scaffold out a shell script handling arguments, options, flags, automatic usage creation and version.
+A generator to scaffold out a POSIX compliant shell script, handling arguments, options and flags. 
+With automatic usage creation and built-in versioning system. 
 
 # Table of Contents
 
@@ -116,7 +117,7 @@ Following the prompts you will choose your flag's variable name, short/long name
 into the generated usage.
 
 ### Version
-Allows to handle the version of your script following semver specs 
+Allows to handle the version of your script following [semver](http://semver.org/) specs 
 
 #### Example:
 
