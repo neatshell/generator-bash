@@ -34,6 +34,8 @@ yo bash my-script.sh
 Follow all the prompts and choose what suits you most for the script you would like to create.
 When you finish with all of the prompts, your generable-script will be created.
 
+> NOTE: You can also start with a basic blank project and add what you need later.
+
 Once finished, you will see a structure like below:
 
 ```
@@ -68,6 +70,7 @@ previously created with the main generator or with the option subgenerator.
 * [bash:argument](#argument)
 * [bash:option](#option)
 * [bash:flag](#flag)
+* [bash:version](#version)
 
 ***Note: Generators need to be run from the root directory of your generable-script.***
 
@@ -107,6 +110,29 @@ $ yo bash:flag my-script.sh
 Following the prompts you will choose your flag's variable name, short/long name and the optional description to show
 into the generated usage.
 
+### Version
+Allows to handle the version of your script following semver specs 
+
+#### Example:
+
+```
+$ yo bash:version my-script.sh patch
+```
+
+This will bump the **patch** version of your script changing the output of:
+
+```
+$ ./my-script.sh --version
+```
+From
+```
+$ 0.1.0
+```
+To
+```
+$ 0.1.1
+```
+Other possible values are: **minor** and **major** that respectively also reset the patch to 0 and both the minor and the patch to 0
 
 ## License
 
