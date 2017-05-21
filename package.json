@@ -1,7 +1,7 @@
 {
   "name": "generator-bash",
   "version": "1.4.1",
-  "description": "A yeoman generator to scaffold out a nice shell script capable of handling flags, options and arguments",
+  "description": "A generator to scaffold out a POSIX compliant shell script, handling arguments, options and flags",
   "homepage": "",
   "author": {
     "name": "Claudio Stella",
