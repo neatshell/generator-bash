@@ -1,4 +1,37 @@
 init() {
     get_options "$@"
     get_arguments "$@"
+
+<% if (args.length>0) {-%>
+    # ARGUMENTS:
+    debug " -- ARGUMENTS"
+    debug "|"
+<% for(var i=0; i<args.length; i++) {-%>
+    # $<%= args[i].varName -%> : <%= args[i].varDesc %>
+    debug "|   <%= args[i].varName -%>=$<%= args[i].varName %>"
+<% } -%>
+    debug "|"
+<% } -%>
+
+<% if (options.length>0) {-%>
+   # OPTIONS:
+   debug " -- OPTIONS"
+   debug "|"
+<% for(var i=0; i<options.length; i++) {-%>
+   # $<%= options[i].varName -%> : <%= options[i].varDesc %>
+   debug "|   <%= options[i].varName -%>=$<%= options[i].varName %>"
+<% } -%>
+   debug "|"
+<% } -%>
+
+<% if (flags.length>0) {-%>
+   # FLAGS:
+   debug " -- FLAGS"
+   debug "|"
+<% for(var i=0; i<flags.length; i++) {-%>
+   # $<%= flags[i].varName -%> : <%= flags[i].varDesc %>
+   debug "|   <%= flags[i].varName -%>=$<%= flags[i].varName %>"
+<% } -%>
+   debug "|"
+<% } -%>
 }
