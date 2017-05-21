@@ -71,8 +71,10 @@ previously created with the main generator or with the option subgenerator.
 * [bash:option](#option)
 * [bash:flag](#flag)
 * [bash:version](#version)
+* [bash:init](#init)
+* [bash:write](#write)
 
-***Note: Generators need to be run from the root directory of your generable-script.***
+***Note: Generators need to be run from the root directory of your generable-script (Where the .yo-rc.json is located)***
 
 ### Argument
 Allows to add an input argument inside your script 
@@ -133,6 +135,15 @@ To
 $ 0.1.1
 ```
 Other possible values are: **minor** and **major** that respectively also reset the patch to 0 and both the minor and the patch to 0
+
+### Init
+Initializes a bare generable-script with no arguments,options nor flag. You can add them later by using 
+the respective subgenerators or by properly modifying the .yo-rc.json
+
+### Write
+Called internally by every above described generators, it's the piece of code that converts the data stored into
+the .yo-rc.json into the final generated script. You should use this generator when the .yo-rc.json has been
+modified manually to reflect the changes into the script.
 
 ## License
 
