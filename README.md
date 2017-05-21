@@ -158,8 +158,6 @@ The output will be
 ```
 create my-script.sh
 ```
-> NOTE: This will also run chmod +x **my-script.sh**
-
 ### Write
 Called internally by every above described generators, it's the piece of code that converts the data stored into
 the .yo-rc.json into the final generated script. You should use this generator only when the .yo-rc.json has been
@@ -173,8 +171,11 @@ The output will be
 conflict my-script.sh
 ? Overwrite my-script.sh? (Ynaxdh)
 ```
+
 with the Yeoman's [conflicter](http://yeoman.io/generator/Conflicter.html) asking you to override the old script. 
 Pressing return, the default **Y** will be passed and your script will be updated.
+
+> NOTE: This will also run chmod +x **my-script.sh**
 
 ## License
 
