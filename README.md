@@ -1,5 +1,5 @@
 # generator-bash [![NPM version][npm-image]][npm-url] [![Dependency Status][daviddm-image]][daviddm-url]
-> A generator to scaffold out a shell script handling arguments, options, flags, automatic usage creation and version.
+A generator to scaffold out a shell script handling arguments, options, flags, automatic usage creation and version.
 
 # Table of Contents
 
@@ -34,7 +34,7 @@ yo bash my-script.sh
 Follow all the prompts and choose what suits you most for the script you would like to create.
 When you finish with all of the prompts, your generable-script will be created.
 
-> NOTE: You can also start with a basic blank project and add what you need later.
+> NOTE: You can also start with a basic blank project and add what you need later (see [init](#init))
 
 Once finished, you will see a structure like below:
 
@@ -64,6 +64,9 @@ ARGUMENTs, OPTIONs and FLAGs and also the VERSION of your script. Under the hood
 **.yo-rc.json** configuration file and once understood the mechanisms you can also modify directly this file to speed up 
 the workflow or when there's no way with subgenerators to achieve a task for example: renaming an OPTION long or short name 
 previously created with the main generator or with the option subgenerator.
+
+> NOTE: You should not modify the dotfiles under your generable-script folder, if you want to preserve the automatic
+usage generation and the correct input arguments/options reading
 
 ## Sub-Generators
 
