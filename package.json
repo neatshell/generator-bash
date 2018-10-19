@@ -1,6 +1,6 @@
 {
   "name": "generator-bash",
-  "version": "1.4.2",
+  "version": "1.5.0",
   "description": "A generator to scaffold out a POSIX compliant shell script, handling arguments, options and flags",
   "homepage": "",
   "author": {
