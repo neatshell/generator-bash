@@ -77,6 +77,12 @@ const
     },
     {
       type: 'confirm',
+      name: 'varMandatory',
+      message: 'is mandatory?',
+      default: false
+    },
+    {
+      type: 'confirm',
       name: 'hasAnotherArgument',
       message: 'Another argument?',
       default: false
