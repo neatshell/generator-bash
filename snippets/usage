@@ -2,7 +2,8 @@ usage() {
 cat << EOF
 usage: $0 <% if (flags.length) {-%>[-<% for(var i=0; i<flags.length; i++) {-%><%= flags[i].varShort -%><% } -%>]<% } -%>
 <% for(var i=0; i<options.length; i++) {-%> [-<%= options[i].varShort -%> VALUE]<% } -%>
-<% for(var i=0; i<args.length; i++) {-%> <%= args[i].varName %><% } -%>
+<% var margs = args.filter(arg => !!arg.varMandatory); for(var i=0; i<margs.length; i++) {-%> <<%= margs[i].varName %>><% } -%>
+<% var oargs = args.filter(arg => !arg.varMandatory); for(var i=0; i<oargs.length; i++) {-%> [<%= oargs[i].varName %>]<% } -%>
 
 <% if (description) {-%>
 

@@ -1,12 +1,33 @@
 get_arguments() {
-    _ARGS="<% for(var i=0; i<args.length; i++) {-%><%= args[i].varName%><% if ((i+1)<args.length) {-%> <% } -%><% } -%>"
+    _MARGS="<% var margs = args.filter(arg => !!arg.varMandatory); for(var i=0; i<margs.length; i++) {-%><%= margs[i].varName%><% if ((i+1)<margs.length) {-%> <% } -%><% } -%>"
+    _OARGS="<% var oargs = args.filter(arg => !arg.varMandatory); for(var i=0; i<oargs.length; i++) {-%><%= oargs[i].varName%><% if ((i+1)<oargs.length) {-%> <% } -%><% } -%>"
+    _ARGS=(<% var aargs = margs.concat(oargs); for(var i=0; i<aargs.length; i++) {-%><%= aargs[i].varName%><% if ((i+1)<aargs.length) {-%> <% } -%><% } -%>)
+    _LAST=$((${#_ARGS[@]}-1))
 
     shift $(( _ARGSHIFT - 1 ))
 
-    for _ARG in $_ARGS
+    for _MARG in $_MARGS
     do
       if [ ! -z "$1" ]; then
-        eval "$_ARG=$1"
+        if [ ${_ARGS[_LAST]} == ${_MARG} ]; then
+          eval "$_MARG=\"$@\""
+        else
+          eval "$_MARG=$1"
+        fi
+      else
+        error "${_MARG} is a mandatory argument" usage 1
+      fi
+      shift
+    done
+
+    for _OARG in $_OARGS
+    do
+      if [ ! -z "$1" ]; then
+        if [ ${_ARGS[_LAST]} == ${_OARG} ]; then
+          eval "$_OARG=\"$@\""
+        else
+          eval "$_OARG=$1"
+        fi
       fi
       shift
     done

@@ -18,8 +18,9 @@ function createFlag(flagProps) {
 function createArgument(argProps) {
   return {
     varName: argProps.varName,
-    varDesc: argProps.varDesc
-  };
+    varDesc: argProps.varDesc,
+    varMandatory: !!argProps.varMandatory
+  }
 }
 
 function createValuesMap(that) {
