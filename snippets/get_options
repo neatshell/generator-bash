@@ -15,7 +15,7 @@ get_options() {
 <% if (flags[i].varShort.length) {-%>
         <%= flags[i].varShort %>)
           _ARGSHIFT="${OPTIND}"
-          <%= flags[i].varName%>=1
+          <%= flags[i].varName%>=<%= flags[i].varValue%>
           ;;
 <% } -%><% } -%>
         -)
@@ -25,7 +25,7 @@ get_options() {
 <% for(var i=0; i<flags.length; i++) {-%>
 <% if (flags[i].varLong.length) {-%>
             <%= flags[i].varLong %>)
-              <%= flags[i].varName%>=1
+              <%= flags[i].varName%>=<%= flags[i].varValue%>
               _ARGSHIFT="${OPTIND}"
               ;;
 <% } -%><% } -%>

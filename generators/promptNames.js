@@ -63,6 +63,11 @@ const
     optionPrompts[2],
     optionPrompts[3],
     {
+      type: 'input',
+      name: 'varValue',
+      message: 'flag value'
+    },
+    {
       type: 'confirm',
       name: 'hasAnotherFlag',
       message: 'Another flag?',

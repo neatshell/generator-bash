@@ -13,7 +13,9 @@ function createOption(optionProps) {
 }
 
 function createFlag(flagProps) {
-  return createOption(flagProps);
+  const option = createOption(flagProps);
+  option.varValue = flagProps.varValue;
+  return option;
 }
 
 function createArgument(argProps) {
@@ -30,6 +32,7 @@ function createValuesMap(that) {
     varName: '_VERBOSE',
     varShort: 'v',
     varLong: 'verbose',
+    varValue: 1,
     varDesc: 'Enable verbose mode'
   };
 

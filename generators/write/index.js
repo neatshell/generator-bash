@@ -2,6 +2,7 @@ const
   Generator = require('yeoman-generator'),
   utils = require('../utils'),
   utilsUsage = require('../utilsUsage'),
+  utilsFlags = require('../utilsFlags'),
   fs = require('fs'),
   ejs = require('ejs');
 
@@ -44,6 +45,7 @@ module.exports = class extends Generator {
       snippets.forEach((snippet) => {
         let file = this.fs.read(SOURCE_DIR + snippet);
         const isTemplate = templates.indexOf(snippet) >= 0;
+        values.flags = utilsFlags.getValuesFlags(values.flags);
         values.flags = utilsUsage.formatUsageDesc(values.flags);
         values.options = utilsUsage.formatUsageDesc(values.options);
 
