@@ -48,6 +48,7 @@ module.exports = class extends Generator {
         values.flags = utilsFlags.getValuesFlags(values.flags);
         values.flags = utilsUsage.formatUsageDesc(values.flags);
         values.options = utilsUsage.formatUsageDesc(values.options);
+        values._script = `_${scriptName.replace('.','_')}`;
 
         if (isTemplate) {
           compiled.push(ejs.render(file, values));
@@ -70,7 +71,7 @@ module.exports = class extends Generator {
   }
 
   end(scriptName) {
-    if (!this.scripts) {
+    if (scriptName) {
       fs.chmodSync(scriptName, '755');
     }
   }

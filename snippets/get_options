@@ -21,7 +21,7 @@ get_options() {
         -)
           case "${OPTARG}" in
             help) usage && exit 0;;
-            version) echo "$_VERSION" && exit 0;;
+            version) echo "$<%= _script -%>_version" && exit 0;;
 <% for(var i=0; i<flags.length; i++) {-%>
 <% if (flags[i].varLong.length) {-%>
             <%= flags[i].varLong %>)
