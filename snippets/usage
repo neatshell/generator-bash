@@ -1,6 +1,6 @@
 usage() {
 cat << EOF
-usage: $_SCRIPT_NAME <% if (flags.length) {-%>[-<% for(var i=0; i<flags.length; i++) {-%><%= flags[i].varShort -%><% } -%>]<% } -%>
+usage: $<%= _script -%>_name <% if (flags.length) {-%>[-<% for(var i=0; i<flags.length; i++) {-%><%= flags[i].varShort -%><% } -%>]<% } -%>
 <% for(var i=0; i<options.length; i++) {-%> [-<%= options[i].varShort -%> VALUE]<% } -%>
 <% var margs = args.filter(arg => !!arg.varMandatory); for(var i=0; i<margs.length; i++) {-%> <<%= margs[i].varName %>><% } -%>
 <% var oargs = args.filter(arg => !arg.varMandatory); for(var i=0; i<oargs.length; i++) {-%> [<%= oargs[i].varName %>]<% } -%>
