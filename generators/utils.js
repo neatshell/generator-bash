@@ -1,4 +1,3 @@
-const templates = require("./snippets").templates;
 const snippets = require("./snippets").snippets;
 const interpreters = require("./interpreters");
 
@@ -35,16 +34,30 @@ function createValuesMap(that) {
     varDesc: "Enable verbose mode"
   };
 
+  let scriptType = 'single';
+  let args = [];
+  let commands;
+
+  if (that.options.multi) {
+    scriptType = 'multi';
+    args.push(createArgument({
+      varName: 'command',
+      varDesc: 'The command name',
+      varMandatory: true
+    }));
+    commands = [];
+  }
+
   return {
     scriptName: scriptName,
     shebang: interpreters[0].value,
     silent: that.options.silent,
     description: "",
-    templates: templates,
-    snippets: snippets,
+    snippets: snippets[scriptType],
     options: [],
     flags: [verboseFlag],
-    args: [],
+    args: args,
+    commands,
     version: {
       major: 0,
       minor: 1,
