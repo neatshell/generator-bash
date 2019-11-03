@@ -10,6 +10,13 @@ module.exports = class extends Generator {
       required: true,
       type: String
     });
+    this.option('multi', {
+      alias: 'm',
+      default: false,
+      description: 'Whether to create a multi commands script',
+      hide: false,
+      type: Boolean
+    });
     this.option('silent', {
       alias: 's',
       default: false,
@@ -26,7 +33,8 @@ module.exports = class extends Generator {
       const done = that.async();
       that.composeWith(require.resolve('../init'), {
         arguments: [scriptName, that],
-        silent: that.options.silent
+        silent: that.options.silent,
+        multi: that.options.multi
       });
       done();
     } else {
