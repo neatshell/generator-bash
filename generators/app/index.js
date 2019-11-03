@@ -1,5 +1,3 @@
-"use strict";
-
 const Generator = require("yeoman-generator");
 const chalk = require("chalk");
 const yosay = require("yosay");
@@ -12,6 +10,13 @@ module.exports = class extends Generator {
     this.argument("scriptName", {
       required: true,
       type: String
+    });
+    this.option("multi", {
+      alias: "m",
+      default: false,
+      description: "Whether to create a multi commands script",
+      hide: false,
+      type: Boolean
     });
     this.option("silent", {
       alias: "s",
@@ -31,7 +36,8 @@ module.exports = class extends Generator {
       const done = that.async();
       that.composeWith(require.resolve("../init"), {
         arguments: [scriptName, that],
-        silent: that.options.silent
+        silent: that.options.silent,
+        multi: that.options.multi
       });
       done();
     }
@@ -64,8 +70,8 @@ module.exports = class extends Generator {
         arguments: [scriptName, that.values]
       });
 
-      done();
-    });
+        done();
+      }.bind(that));
   }
 
   configuring(scriptName) {
