@@ -1,7 +1,6 @@
-const
-  templates = require('./snippets').templates,
-  snippets = require('./snippets').snippets,
-  interpreters = require('./interpreters');
+const templates = require('./snippets').templates;
+const snippets = require('./snippets').snippets;
+const interpreters = require('./interpreters');
 
 function createOption(optionProps) {
   return {
@@ -67,6 +66,5 @@ module.exports = {
   createOption: createOption,
   createFlag: createFlag,
   createValuesMap: createValuesMap,
-  getDir: getDir,
-  getPrefix: getPrefix
+  getDir: getDir
 };

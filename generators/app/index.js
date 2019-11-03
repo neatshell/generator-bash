@@ -1,9 +1,7 @@
-'use strict';
-
-const Generator = require('yeoman-generator'),
-  chalk = require('chalk'),
-  yosay = require('yosay'),
-  promptNames = require('../promptNames');
+const Generator = require('yeoman-generator');
+const chalk = require('chalk');
+const yosay = require('yosay');
+const promptNames = require('../promptNames');
 
 module.exports = class extends Generator {
   constructor(args, opts) {
