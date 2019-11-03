@@ -66,6 +66,5 @@ module.exports = {
   createOption: createOption,
   createFlag: createFlag,
   createValuesMap: createValuesMap,
-  getDir: getDir,
-  getPrefix: getPrefix
+  getDir: getDir
 };
