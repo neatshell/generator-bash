@@ -1,0 +1,8 @@
+# Add a command in the commands var
+add_command() {
+    if [[ ${commands} ]]; then
+        commands="${commands} ${1}"
+    else
+        commands="${1}"
+    fi
+}
