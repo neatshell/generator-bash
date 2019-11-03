@@ -1,0 +1,12 @@
+# Check if the provided command is available
+check_command() {
+    exists=
+    for command in ${commands}
+    do
+        if [[ "${command}" == "${1}" ]]; then
+            exists=1
+            break
+        fi
+    done
+    echo "${exists}"
+}
