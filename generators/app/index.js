@@ -57,10 +57,15 @@ module.exports = class extends Generator {
       .then(function (props) {
         that.values['shebang'] = props.shebang;
         that.values['description'] = props.description;
-
-        that.composeWith(require.resolve('../argument'), {
-          arguments: [scriptName, that.values]
-        });
+        if (that.options.multi) {
+          that.composeWith(require.resolve('../command'), {
+            arguments: [scriptName, that.values]
+          });
+        } else {
+          that.composeWith(require.resolve('../argument'), {
+            arguments: [scriptName, that.values]
+          });
+        }
         that.composeWith(require.resolve('../option'), {
           arguments: [scriptName, that.values]
         });
