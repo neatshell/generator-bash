@@ -12,6 +12,12 @@ const
       choices: require('./interpreters')
     }
   ],
+  commands = [{
+    type: 'confirm',
+    name: 'hasCommands',
+    message: 'Has commands?',
+    default: false
+  }],
   args = [{
     type: 'confirm',
     name: 'hasArguments',
@@ -92,13 +98,27 @@ const
       message: 'Another argument?',
       default: false
     }];
+  commandPrompts = [
+    {
+      type: 'input',
+      name: 'cmdName',
+      message: 'Command name'
+    },
+    {
+      type: 'confirm',
+      name: 'hasAnotherCommand',
+      message: 'Another command?',
+      default: false
+    }];
 
 module.exports = {
-  main:  main,
-  argPrompts: argPrompts,
-  optionPrompts: optionPrompts,
-  flagPrompts: flagPrompts,
-  args: args,
-  options: options,
-  flags: flags
+  main,
+  commandPrompts,
+  argPrompts,
+  optionPrompts,
+  flagPrompts,
+  args,
+  options,
+  flags,
+  commands
 };
