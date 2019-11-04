@@ -1,13 +1,7 @@
 # List all the available commands
 list_commands() {
-    output=
     for command in ${commands}
     do
-        if [[ ${output} ]]; then
-            output="${output}${command}"
-        else
-            output="${command}\n"
-        fi
+      echo "${command}"
     done
-    echo -e "${output}"
 }

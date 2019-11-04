@@ -4,7 +4,7 @@ init() {
 
 <% if (commands.length>0) {-%>
 <% for(var i=0; i<commands.length; i++) {-%>
-    add_command <%= commands[i] -%>
+    add_command <%= commands[i] %>
 <% } -%>
 <% } -%>
 
