@@ -1,17 +1,16 @@
 {
   "name": "generator-bash",
-  "version": "1.4.2",
+  "version": "2.0.0-alpha.0",
   "description": "A generator to scaffold out a POSIX compliant shell script, handling arguments, options and flags",
-  "homepage": "",
   "author": {
     "name": "Claudio Stella",
-    "email": "claudio.stella.ict@gmail.com",
-    "url": ""
+    "email": "claudio.stella.ict@gmail.com"
   },
   "files": [
-    "generators"
+    "generators",
+    "snippets"
   ],
-  "main": "generators/index.js",
+  "main": "generators/app/index.js",
   "keywords": [
     "bash",
     "sh",
@@ -23,35 +22,64 @@
     "yo",
     "yeoman-generator"
   ],
-  "dependencies": {
-    "chalk": "^1.0.0",
-    "yeoman-generator": "^1.0.0",
-    "yosay": "^2.0.0"
-  },
   "devDependencies": {
-    "eslint": "^2.1.0",
-    "eslint-config-xo-space": "^0.13.0",
-    "gulp": "^3.9.0",
-    "gulp-eslint": "^2.0.0",
-    "gulp-exclude-gitignore": "^1.0.0",
-    "gulp-istanbul": "^0.10.3",
-    "gulp-line-ending-corrector": "^1.0.1",
-    "gulp-mocha": "^2.0.0",
-    "gulp-nsp": "^2.1.0",
-    "gulp-plumber": "^1.0.0",
-    "yeoman-assert": "^2.0.0",
-    "yeoman-test": "^1.0.0"
+    "yeoman-test": "^1.7.0",
+    "yeoman-assert": "^3.1.0",
+    "coveralls": "^3.0.7",
+    "eslint": "^6.6.0",
+    "prettier": "^1.19.1",
+    "husky": "^3.0.9",
+    "lint-staged": "^9.4.3",
+    "eslint-config-prettier": "^6.6.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-config-xo": "^0.27.2",
+    "jest": "^24.8.0"
   },
-  "eslintConfig": {
-    "extends": "xo-space",
-    "env": {
-      "mocha": true
+  "engines": {
+    "npm": ">= 4.0.0"
+  },
+  "dependencies": {
+    "yeoman-generator": "^2.0.1",
+    "chalk": "^2.1.0",
+    "yosay": "^2.0.1"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ],
+    "*.json": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
     }
   },
-  "repository": "neatshell/generator-bash",
+  "eslintConfig": {
+    "extends": [
+      "xo",
+      "prettier"
+    ],
+    "env": {
+      "jest": true,
+      "node": true
+    },
+    "rules": {
+      "prettier/prettier": "error"
+    },
+    "plugins": [
+      "prettier"
+    ]
+  },
   "scripts": {
-    "prepublish": "gulp prepublish",
-    "test": "gulp"
+    "pretest": "eslint .",
+    "test": "jest"
   },
   "license": "Apache-2.0"
 }
