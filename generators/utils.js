@@ -52,6 +52,7 @@ function createValuesMap(that) {
 
   return {
     scriptName: scriptName,
+    scriptAlias: "",
     shebang: interpreters[0].value,
     silent: that.options.silent,
     description: "",

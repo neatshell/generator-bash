@@ -1,6 +1,7 @@
 #<%= shebang %>
 
-<%= _script -%>_name=$0
+<%= _script -%>_name=<% if (typeof scriptAlias !== 'undefined') {-%>'<%=scriptAlias-%>'<% } else {-%>$(basename ${0})<% } -%>
+
 <%= _script -%>_version=<%= version.major -%>.<%= version.minor -%>.<%= version.patch %>
 _ARGSHIFT=1
 
