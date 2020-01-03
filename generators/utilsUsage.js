@@ -3,37 +3,41 @@ function createLeft(opt) {
     return string && string.length;
   }
 
-  const optShort = opt.varShort, optLong = opt.varLong;
+  const optShort = opt.varShort;
+  const optLong = opt.varLong;
 
   if (notEmpty(optShort) && notEmpty(optLong)) {
-    return '-' + optShort + ', --' + optLong;
+    return "-" + optShort + ", --" + optLong;
   }
+
   if (notEmpty(optShort) && !notEmpty(optLong)) {
-    return '-' + optShort;
+    return "-" + optShort;
   }
+
   if (!notEmpty(optShort) && notEmpty(optLong)) {
-    return '--' + optLong;
+    return "--" + optLong;
   }
 }
 
 function pad(varUsageLeft, max) {
   let n = max - varUsageLeft.length;
-  let space = '  ';
+  let space = "  ";
   while (n > 0) {
-    space+=' ';
-    n = n - 1;
+    space += " ";
+    n -= 1;
   }
+
   return varUsageLeft + space;
 }
 
 function formatUsageDesc(options) {
   const varUsageList = [];
-  options.forEach((option) => {
+  options.forEach(option => {
     varUsageList.push(createLeft(option));
   });
 
   let max = 0;
-  varUsageList.forEach((varUsageLeft) => {
+  varUsageList.forEach(varUsageLeft => {
     const len = varUsageLeft.length;
     if (len > max) {
       max = len;
@@ -48,5 +52,5 @@ function formatUsageDesc(options) {
 }
 
 module.exports = {
-  formatUsageDesc: formatUsageDesc,
+  formatUsageDesc: formatUsageDesc
 };

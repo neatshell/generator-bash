@@ -1,19 +1,19 @@
-const
-  Generator = require('yeoman-generator'),
-  chalk = require('chalk'),
-  utils = require('../utils'),
-  promptNames = require('../promptNames');
+const Generator = require("yeoman-generator");
+const chalk = require("chalk");
+const utils = require("../utils");
+const promptNames = require("../promptNames");
 
 module.exports = class extends Generator {
   initializing(scriptName, values) {
-    this.argument('scriptName', {type: String, required: true});
+    this.argument("scriptName", { type: String, required: true });
     if (!values) {
       values = this.config.get(scriptName);
       if (!values) {
         throw new Error(`No configuration found for script: ${scriptName}`);
       }
     }
-    this.values = values
+
+    this.values = values;
   }
 
   prompting(scriptName, values) {
@@ -24,11 +24,10 @@ module.exports = class extends Generator {
 
     function promptOption(hasAnotherOption) {
       if (hasAnotherOption) {
-        that.prompt(promptNames.optionPrompts)
-          .then(function (optionProps) {
-            values.options.push(utils.createOption(optionProps));
-            promptOption(optionProps.hasAnotherOption);
-          });
+        that.prompt(promptNames.optionPrompts).then(function(optionProps) {
+          values.options.push(utils.createOption(optionProps));
+          promptOption(optionProps.hasAnotherOption);
+        });
       } else {
         done();
       }
@@ -37,12 +36,11 @@ module.exports = class extends Generator {
     if (standalone) {
       promptOption(true);
     } else {
-      this.log(chalk.yellow('OPTIONS'));
+      this.log(chalk.yellow("OPTIONS"));
 
-      this.prompt(promptNames.options)
-        .then(function (props) {
-          promptOption(props.hasOptions);
-        }.bind(this));
+      this.prompt(promptNames.options).then(function(props) {
+        promptOption(props.hasOptions);
+      });
     }
   }
 
@@ -54,7 +52,7 @@ module.exports = class extends Generator {
   }
 
   writing(scriptName) {
-    this.composeWith(require.resolve('../write'), {
+    this.composeWith(require.resolve("../write"), {
       arguments: [scriptName]
     });
   }

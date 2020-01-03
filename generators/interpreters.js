@@ -1,10 +1,10 @@
 module.exports = [
   {
-    name: 'bash',
-    value: '!/usr/bin/env bash'
+    name: "bash",
+    value: "!/usr/bin/env bash"
   },
   {
-    name: 'sh',
-    value: '!/usr/bin/env sh'
+    name: "sh",
+    value: "!/usr/bin/env sh"
   }
 ];

@@ -1,18 +1,17 @@
-const
-  Generator = require('yeoman-generator'),
-  utils = require('../utils'),
-  utilsUsage = require('../utilsUsage'),
-  promptNames = require('../promptNames'),
-  fs = require('fs'),
-  ejs = require('ejs');
+const Generator = require("yeoman-generator");
+const utils = require("../utils");
+const utilsUsage = require("../utilsUsage");
+const fs = require("fs");
+const ejs = require("ejs");
 
 module.exports = class extends Generator {
   initializing(scriptName) {
-    this.argument('scriptName', {type: String, required: true});
+    this.argument("scriptName", { type: String, required: true });
     const values = this.config.get(scriptName);
     if (!values) {
       throw new Error(`No configuration found for script: ${scriptName}`);
     }
+
     this.values = values;
   }
 
@@ -23,7 +22,7 @@ module.exports = class extends Generator {
 
     let compiled = [];
 
-    snippets.forEach((snippet) => {
+    snippets.forEach(snippet => {
       let file = this.fs.read(SOURCE_DIR + snippet);
       const isTemplate = templates.indexOf(snippet) >= 0;
       this.values.flags = utilsUsage.formatUsageDesc(this.values.flags);
@@ -39,10 +38,10 @@ module.exports = class extends Generator {
   }
 
   writing(scriptName) {
-    this.fs.write(scriptName, this.compiled.join('\n'));
+    this.fs.write(scriptName, this.compiled.join("\n"));
   }
 
   end(scriptName) {
-    fs.chmodSync(scriptName, '755');
+    fs.chmodSync(scriptName, "755");
   }
 };
