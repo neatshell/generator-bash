@@ -3,17 +3,17 @@ const common = [
   "error",
   "log",
   "debug",
-  "usage",
   "get_options",
   "get_arguments"
 ];
 
 module.exports = {
-  single: common.concat(["init", "body"]),
+  single: common.concat(["usage", "init", "body"]),
   multi: common.concat([
     "add_command",
     "check_command",
     "list_commands",
+    "usage_multi",
     "init_multi",
     "body"
   ]),
@@ -23,6 +23,7 @@ module.exports = {
     "log",
     "debug",
     "usage",
+    "usage_multi",
     "get_options",
     "get_arguments",
     "init",

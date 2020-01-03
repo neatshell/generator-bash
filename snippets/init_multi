@@ -1,19 +1,15 @@
 init() {
-    get_options "$@"
-    get_arguments "$@"
-
 <% if (commands.length>0) {-%>
 <% for(var i=0; i<commands.length; i++) {-%>
     add_command <%= commands[i] %>
 <% } -%>
 <% } -%>
 
+    get_options "$@"
+    get_arguments "$@"
+
     if [[ ! $(check_command ${command}) ]]; then
         usage
-        echo
-        echo "The command: \"${command}\" is invalid, here the list of valid commands:"
-        echo
-        list_commands
     else
         command_dir=$(dirname "${0}")
         command=${1}
