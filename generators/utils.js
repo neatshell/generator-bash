@@ -1,4 +1,4 @@
-const snippets = require("./snippets").snippets;
+const snippets = require("./snippets");
 const interpreters = require("./interpreters");
 
 function createOption(optionProps) {
