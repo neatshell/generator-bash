@@ -20,8 +20,8 @@ function createArgument(argProps) {
   return {
     varName: argProps.varName,
     varDesc: argProps.varDesc,
-    varMandatory: !!argProps.varMandatory
-  }
+    varMandatory: Boolean(argProps.varMandatory)
+  };
 }
 
 function createValuesMap(that) {
@@ -34,17 +34,19 @@ function createValuesMap(that) {
     varDesc: "Enable verbose mode"
   };
 
-  let scriptType = 'single';
+  let scriptType = "single";
   let args = [];
   let commands;
 
   if (that.options.multi) {
-    scriptType = 'multi';
-    args.push(createArgument({
-      varName: 'command',
-      varDesc: 'The command name',
-      varMandatory: true
-    }));
+    scriptType = "multi";
+    args.push(
+      createArgument({
+        varName: "command",
+        varDesc: "The command name",
+        varMandatory: true
+      })
+    );
     commands = [];
   }
 

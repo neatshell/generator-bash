@@ -1,18 +1,18 @@
-const
-  Generator = require('yeoman-generator'),
-  chalk = require('chalk'),
-  promptNames = require('../promptNames');
+const Generator = require("yeoman-generator");
+const chalk = require("chalk");
+const promptNames = require("../promptNames");
 
 module.exports = class extends Generator {
   initializing(scriptName, values) {
-    this.argument('scriptName', {type: String, required: true});
+    this.argument("scriptName", { type: String, required: true });
     if (!values) {
       values = this.config.get(scriptName);
       if (!values) {
         throw new Error(`No configuration found for script: ${scriptName}`);
       }
     }
-    this.values = values
+
+    this.values = values;
   }
 
   prompting(scriptName, values) {
@@ -23,11 +23,10 @@ module.exports = class extends Generator {
 
     function promptCommand(hasAnotherCommand) {
       if (hasAnotherCommand) {
-        that.prompt(promptNames.commandPrompts)
-          .then(function (cmdProps) {
-            values.commands.push(cmdProps.cmdName);
-            promptCommand(cmdProps.hasAnotherCommand);
-          });
+        that.prompt(promptNames.commandPrompts).then(function(cmdProps) {
+          values.commands.push(cmdProps.cmdName);
+          promptCommand(cmdProps.hasAnotherCommand);
+        });
       } else {
         done();
       }
@@ -36,11 +35,10 @@ module.exports = class extends Generator {
     if (standalone) {
       promptCommand(true);
     } else {
-      this.log(chalk.yellow('COMMANDS'));
-      this.prompt(promptNames.commands)
-        .then(function (props) {
-          promptCommand(props.hasCommands);
-        }.bind(this));
+      this.log(chalk.yellow("COMMANDS"));
+      this.prompt(promptNames.commands).then(function(props) {
+        promptCommand(props.hasCommands);
+      });
     }
   }
 
@@ -52,7 +50,7 @@ module.exports = class extends Generator {
   }
 
   writing(scriptName) {
-    this.composeWith(require.resolve('../write'), {
+    this.composeWith(require.resolve("../write"), {
       arguments: [scriptName]
     });
   }

@@ -8,13 +8,20 @@ const path = require("path");
 const snippets = require("../snippets");
 
 const getSnippetPath = (that, scriptName, snippetName) => {
-  const customSnippetPath = path.resolve(utils.getDir(that, scriptName), snippetName);
+  const customSnippetPath = path.resolve(
+    utils.getDir(that, scriptName),
+    snippetName
+  );
   if (!fs.existsSync(customSnippetPath)) {
-    const oursSnippetPath = path.resolve(that.templatePath('../../../snippets/'), snippetName);
+    const oursSnippetPath = path.resolve(
+      that.templatePath("../../../snippets/"),
+      snippetName
+    );
     if (fs.existsSync(oursSnippetPath)) {
       return oursSnippetPath;
     }
   }
+
   return customSnippetPath;
 };
 
@@ -28,37 +35,39 @@ module.exports = class extends Generator {
         const yoRc = require(this.destinationPath(".yo-rc.json"));
         const scriptNames = Object.keys(yoRc["generator-bash"]);
         this.scripts = [];
-        scriptNames.forEach((scriptName) => {
+        scriptNames.forEach(scriptName => {
           this.scripts.push({
             name: scriptName,
             values: this.config.get(scriptName)
-          })
-        })
+          });
+        });
       }
-    } else {
-      this.scripts = [{
-        name: scriptName,
-        values: values
-      }];
+    } else if (values) {
+      this.scripts = [
+        {
+          name: scriptName,
+          values: values
+        }
+      ];
     }
   }
 
   reading() {
     const newScripts = [];
-    this.scripts.forEach((script) => {
+    this.scripts.forEach(script => {
       const scriptName = script.name;
       const values = script.values;
       const templates = values.templates || snippets.templates;
       const compiled = [];
 
-      values.snippets.forEach((snippet) => {
+      values.snippets.forEach(snippet => {
         const filePath = getSnippetPath(this, scriptName, snippet);
         const file = this.fs.read(filePath);
         const isTemplate = templates.indexOf(snippet) >= 0;
         values.flags = utilsFlags.getValuesFlags(values.flags);
         values.flags = utilsUsage.formatUsageDesc(values.flags);
         values.options = utilsUsage.formatUsageDesc(values.options);
-        values._script = `_${scriptName.replace(".","_")}`;
+        values._script = `_${scriptName.replace(".", "_")}`;
 
         if (isTemplate) {
           compiled.push(ejs.render(file, values));
@@ -69,13 +78,13 @@ module.exports = class extends Generator {
       newScripts.push({
         name: scriptName,
         compiled: compiled
-      })
+      });
     });
     this.scripts = newScripts;
   }
 
-  writing(scriptName) {
-    this.scripts.forEach((script) => {
+  writing() {
+    this.scripts.forEach(script => {
       const scriptName = script.name;
       const scriptCustomFolder = utils.getDir(this, scriptName);
       // The first time that we run the script, the folder containing
@@ -83,14 +92,18 @@ module.exports = class extends Generator {
       // defined under snippets.custom. So only for the first run we have to create this stuff.
       if (!fs.existsSync(scriptCustomFolder)) {
         fs.mkdirSync(scriptCustomFolder);
-        snippets.custom.forEach((customSnippetName) => {
+        snippets.custom.forEach(customSnippetName => {
           const filePath = getSnippetPath(this, scriptName, customSnippetName);
           const file = this.fs.read(filePath);
-          this.fs.write(path.resolve(scriptCustomFolder, customSnippetName), file);
+          this.fs.write(
+            path.resolve(scriptCustomFolder, customSnippetName),
+            file
+          );
         });
       }
-      this.fs.write(scriptName, script.compiled.join('\n'));
-    })
+
+      this.fs.write(scriptName, script.compiled.join("\n"));
+    });
   }
 
   end(scriptName) {
