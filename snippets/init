@@ -7,7 +7,7 @@ init() {
     debug " -- ARGUMENTS"
     debug "|"
 <% for(var i=0; i<args.length; i++) {-%>
-    # $<%= args[i].varName -%> : <%= args[i].varDesc %>
+    # $<%= args[i].varName -%> : <% if (args[i].varDesc instanceof Array) {-%><%= args[i].varDesc[0] %><% } else {-%><%= args[i].varDesc %><% } %>
     debug "|   <%= args[i].varName -%>=$<%= args[i].varName %>"
 <% } -%>
     debug "|"
@@ -18,7 +18,7 @@ init() {
    debug " -- OPTIONS"
    debug "|"
 <% for(var i=0; i<options.length; i++) {-%>
-   # $<%= options[i].varName -%> : <%= options[i].varDesc %>
+   # $<%= options[i].varName -%> : <% if (options[i].varDesc instanceof Array) {-%><%= options[i].varDesc[0] %><% } else {-%><%= options[i].varDesc %><% } %>
    debug "|   <%= options[i].varName -%>=$<%= options[i].varName %>"
 <% } -%>
    debug "|"
@@ -29,7 +29,7 @@ init() {
    debug " -- FLAGS"
    debug "|"
 <% for(var i=0; i<flags.length; i++) {-%>
-   # $<%= flags[i].varName -%> : <%= flags[i].varDesc %>
+   # $<%= flags[i].varName -%> : <% if (flags[i].varDesc instanceof Array) {-%><%= flags[i].varDesc[0] %><% } else {-%><%= flags[i].varDesc %><% } %>
    debug "|   <%= flags[i].varName -%>=$<%= flags[i].varName %>"
 <% } -%>
    debug "|"
