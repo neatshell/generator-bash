@@ -7,18 +7,18 @@ usage: $<%= _script -%>_name <% if (flags.length) {-%>[-<% for(var i=0; i<flags.
 
 <% if (description) {-%>
 
-<%= description %>
+<%- description %>
 
 <% } -%>
 <% if (options.length>0) {-%>Options:
 <% for(var i=0; i<options.length; i++) {-%>
-<%= options[i].varUsage %>
+<%- options[i].varUsage %>
 <% } -%>
 <% } -%>
 
 <% if (flags.length>0) {-%>Flags:
 <% for(var i=0; i<flags.length; i++) {-%>
-<%= flags[i].varUsage %>
+<%- flags[i].varUsage %>
 <% } -%>
 <% } -%>
 
