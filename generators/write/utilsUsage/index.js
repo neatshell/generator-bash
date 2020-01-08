@@ -1,10 +1,10 @@
-function createLeft(opt) {
+function createLeft(item) {
   function notEmpty(string) {
     return string && string.length;
   }
 
-  const optShort = opt.varShort;
-  const optLong = opt.varLong;
+  const optShort = item.varShort;
+  const optLong = item.varLong;
 
   if (notEmpty(optShort) && notEmpty(optLong)) {
     return "-" + optShort + ", --" + optLong;
@@ -30,10 +30,10 @@ function pad(varUsageLeft, max) {
   return varUsageLeft + space;
 }
 
-function formatUsageDesc(options) {
+function formatUsageDesc(items) {
   const varUsageList = [];
-  options.forEach(option => {
-    varUsageList.push(createLeft(option));
+  items.forEach(item => {
+    varUsageList.push(createLeft(item));
   });
 
   let max = 0;
@@ -45,10 +45,25 @@ function formatUsageDesc(options) {
   });
 
   varUsageList.forEach((varUsageLeft, i) => {
-    options[i].varUsage = pad(varUsageLeft, max) + options[i].varDesc;
+    const varDesc = items[i].varDesc;
+    if (varDesc instanceof Array) {
+      items[i].varUsage = varDesc
+        .map((varDescLine, varDescLineIndex) => {
+          if (varDescLineIndex === 0) {
+            return pad(varUsageLeft, max) + varDescLine;
+          }
+
+          return (
+            pad(Array(varUsageLeft.length + 1).join(" "), max) + varDescLine
+          );
+        })
+        .join("\n");
+    } else {
+      items[i].varUsage = pad(varUsageLeft, max) + varDesc;
+    }
   });
 
-  return options;
+  return items;
 }
 
 module.exports = {
