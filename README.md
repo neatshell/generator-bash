@@ -1,6 +1,5 @@
 # generator-bash [![NPM version][npm-image]][npm-url] [![Dependency Status][daviddm-image]][daviddm-url]
-A generator to scaffold out a POSIX compliant shell script, handling arguments, options and flags. 
-With automatic usage creation and built-in versioning system. 
+A generator to scaffold out a shell script, with arguments, options and flags handling. 
 
 # Table of Contents
 
