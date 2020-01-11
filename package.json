@@ -1,6 +1,6 @@
 {
   "name": "generator-bash",
-  "version": "2.0.0-beta.1",
+  "version": "2.0.0",
   "description": "A generator to scaffold out a shell script, with arguments, options and flags handling",
   "author": {
     "name": "Claudio Stella",
