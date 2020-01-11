@@ -4,6 +4,7 @@ const Generator = require("yeoman-generator");
 const chalk = require("chalk");
 const yosay = require("yosay");
 const promptNames = require("../promptNames");
+const utilsGeneratorHelp = require("../utilsGeneratorHelp");
 
 module.exports = class extends Generator {
   constructor(args, opts) {
@@ -76,5 +77,13 @@ module.exports = class extends Generator {
     this.composeWith(require.resolve("../write"), {
       arguments: [scriptName]
     });
+  }
+
+  usage() {
+    return "yo bash <scriptName> [options]";
+  }
+
+  optionsHelp() {
+    return utilsGeneratorHelp.optionsHelp(this._options);
   }
 };
