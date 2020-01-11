@@ -1,0 +1,8 @@
+Available subgenerators are:
+
+  yo bash:argument  : Add the handling of an input argument
+  yo bash:option    : Add the handling of an input option
+  yo bash:flag      : Add the handling of an input flag
+  yo bash:version   : Change the version of your script
+  yo bash:init      : Generate a bare generable-script with no input handling
+  yo bash:write     : Force a re-generation of the script
