@@ -65,8 +65,9 @@ module.exports = class extends Generator {
         const file = this.fs.read(filePath);
         const isTemplate = templates.indexOf(snippet) >= 0;
         values.flags = utilsFlags.getValuesFlags(values.flags);
-        values.flags = utilsUsage.formatUsageDesc(values.flags);
-        values.options = utilsUsage.formatUsageDesc(values.options);
+        values.flags = utilsUsage.formatOptionDesc(values.flags);
+        values.options = utilsUsage.formatOptionDesc(values.options);
+        values.commands = utilsUsage.formatCommandDesc(values.commands);
         values._script = `_${scriptName.replace(".", "_")}`;
 
         if (isTemplate) {

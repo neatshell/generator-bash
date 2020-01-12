@@ -1,5 +1,6 @@
 const Generator = require("yeoman-generator");
 const chalk = require("chalk");
+const utils = require("../utils");
 const promptNames = require("../promptNames");
 
 module.exports = class extends Generator {
@@ -24,7 +25,7 @@ module.exports = class extends Generator {
     function promptCommand(hasAnotherCommand) {
       if (hasAnotherCommand) {
         that.prompt(promptNames.commandPrompts).then(function(cmdProps) {
-          values.commands.push(cmdProps.cmdName);
+          values.commands.push(utils.createCommand(cmdProps));
           promptCommand(cmdProps.hasAnotherCommand);
         });
       } else {

@@ -24,6 +24,13 @@ function createArgument(argProps) {
   };
 }
 
+function createCommand(cmdProps) {
+  return {
+    cmdName: cmdProps.cmdName,
+    cmdDesc: cmdProps.cmdDesc
+  };
+}
+
 function createValuesMap(that) {
   const scriptName = that.args[0];
   const verboseFlag = {
@@ -79,6 +86,7 @@ function getDir(generator, scriptName) {
 
 module.exports = {
   createArgument: createArgument,
+  createCommand,
   createOption: createOption,
   createFlag: createFlag,
   createValuesMap: createValuesMap,
