@@ -26,7 +26,10 @@ Standard Options:
 --help     Show this help
 --version  Show script version
 
-Commands:
-$(list_commands)
+<% if (typeof commands !== 'undefined') {-%>Commands:
+<% for(var i=0; i<commands.length; i++) {-%>
+<%- commands[i].cmdUsage %>
+<% } -%>
+<% } -%>
 EOF
 }
