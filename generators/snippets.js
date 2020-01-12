@@ -12,7 +12,6 @@ module.exports = {
   multi: common.concat([
     "add_command",
     "check_command",
-    "list_commands",
     "usage_multi",
     "init_multi",
     "body"

@@ -1,7 +1,0 @@
-# List all the available commands
-list_commands() {
-    for command in ${commands}
-    do
-      echo "${command}"
-    done
-}
