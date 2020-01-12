@@ -115,6 +115,11 @@ const commandPrompts = [
     message: "Command name"
   },
   {
+    type: "input",
+    name: "cmdDesc",
+    message: "Command description"
+  },
+  {
     type: "confirm",
     name: "hasAnotherCommand",
     message: "Another command?",
