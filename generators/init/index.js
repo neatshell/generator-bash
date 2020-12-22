@@ -9,7 +9,7 @@ module.exports = class extends Generator {
     createOutermostInput(this);
   }
 
-  initializing(scriptName, that) {
+  initializing(scriptName, scriptAlias, that) {
     this.values = utils.createValuesMap(this);
 
     if (that) {

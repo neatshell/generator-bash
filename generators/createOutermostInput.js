@@ -3,6 +3,10 @@ module.exports = function(that) {
     required: true,
     type: String
   });
+  that.argument("scriptAlias", {
+    required: false,
+    type: String
+  });
   that.option("multi", {
     alias: "m",
     default: false,

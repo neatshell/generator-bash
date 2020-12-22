@@ -11,7 +11,7 @@ module.exports = class extends Generator {
     createOutermostInput(this);
   }
 
-  initializing(scriptName) {
+  initializing(scriptName, scriptAlias) {
     const values = this.config.get(scriptName);
     if (values) {
       this.values = values;
@@ -19,7 +19,7 @@ module.exports = class extends Generator {
       const that = this;
       const done = that.async();
       that.composeWith(require.resolve("../init"), {
-        arguments: [scriptName, that],
+        arguments: [scriptName, scriptAlias, that],
         silent: that.options.silent,
         multi: that.options.multi
       });
@@ -76,7 +76,7 @@ module.exports = class extends Generator {
   }
 
   usage() {
-    return "yo bash <scriptName> [options]";
+    return "yo bash <scriptName> [<scriptAlias>] [options]";
   }
 
   optionsHelp() {

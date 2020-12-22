@@ -33,6 +33,8 @@ function createCommand(cmdProps) {
 
 function createValuesMap(that) {
   const scriptName = that.args[0];
+  const scriptAlias = that.args[1];
+
   const verboseFlag = {
     varName: "_VERBOSE",
     varShort: "v",
@@ -59,7 +61,7 @@ function createValuesMap(that) {
 
   return {
     scriptName: scriptName,
-    scriptAlias: "",
+    scriptAlias: scriptAlias,
     shebang: interpreters[0].value,
     silent: that.options.silent,
     description: "",
