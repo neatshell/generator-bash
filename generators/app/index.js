@@ -2,29 +2,13 @@ const Generator = require("yeoman-generator");
 const chalk = require("chalk");
 const yosay = require("yosay");
 const promptNames = require("../promptNames");
+const createOutermostInput = require("../createOutermostInput");
 const utilsGeneratorHelp = require("../utilsGeneratorHelp");
 
 module.exports = class extends Generator {
   constructor(args, opts) {
     super(args, opts);
-    this.argument("scriptName", {
-      required: true,
-      type: String
-    });
-    this.option("multi", {
-      alias: "m",
-      default: false,
-      description: "Whether to create a multi commands script",
-      hide: false,
-      type: Boolean
-    });
-    this.option("silent", {
-      alias: "s",
-      default: false,
-      description: "Whether to enable silent mode for getopts",
-      hide: false,
-      type: Boolean
-    });
+    createOutermostInput(this);
   }
 
   initializing(scriptName) {

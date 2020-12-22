@@ -1,7 +1,14 @@
 const Generator = require("yeoman-generator");
 const utils = require("../utils");
+const createOutermostInput = require("../createOutermostInput");
+const utilsGeneratorHelp = require("../utilsGeneratorHelp");
 
 module.exports = class extends Generator {
+  constructor(args, opts) {
+    super(args, opts);
+    createOutermostInput(this);
+  }
+
   initializing(scriptName, that) {
     this.values = utils.createValuesMap(this);
 
@@ -19,5 +26,9 @@ module.exports = class extends Generator {
     this.composeWith(require.resolve("../write"), {
       arguments: [scriptName]
     });
+  }
+
+  optionsHelp() {
+    return utilsGeneratorHelp.optionsHelp(this._options);
   }
 };
