@@ -8,6 +8,28 @@ init() {
     get_options "$@"
     get_arguments "$@"
 
+<% if (options.length>0) {-%>
+   # OPTIONS:
+   debug " -- OPTIONS"
+   debug "|"
+<% for(var i=0; i<options.length; i++) {-%>
+   # $<%= options[i].varName -%> : <% if (options[i].varDesc instanceof Array) {-%><%= options[i].varDesc[0] %><% } else {-%><%= options[i].varDesc %><% } %>
+   debug "|   <%= options[i].varName -%>=$<%= options[i].varName %>"
+<% } -%>
+   debug "|"
+<% } -%>
+
+<% if (flags.length>0) {-%>
+   # FLAGS:
+   debug " -- FLAGS"
+   debug "|"
+<% for(var i=0; i<flags.length; i++) {-%>
+   # $<%= flags[i].varName -%> : <% if (flags[i].varDesc instanceof Array) {-%><%= flags[i].varDesc[0] %><% } else {-%><%= flags[i].varDesc %><% } %>
+   debug "|   <%= flags[i].varName -%>=$<%= flags[i].varName %>"
+<% } -%>
+   debug "|"
+<% } -%>
+
     if [[ ! $(check_command ${command}) ]]; then
         usage
     else

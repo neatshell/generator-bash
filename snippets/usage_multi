@@ -8,7 +8,6 @@ usage: $<%= _script -%>_name <% if (flags.length) {-%>[-<% for(var i=0; i<flags.
 <% if (description) {-%>
 
 <%- description %>
-
 <% } -%>
 <% if (options.length>0) {-%>Options:
 <% for(var i=0; i<options.length; i++) {-%>
@@ -22,7 +21,7 @@ usage: $<%= _script -%>_name <% if (flags.length) {-%>[-<% for(var i=0; i<flags.
 <% } -%>
 <% } -%>
 
-Standard Options:
+Global options:
 --help     Show this help
 --version  Show script version
 

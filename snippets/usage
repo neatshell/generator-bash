@@ -22,7 +22,7 @@ usage: $<%= _script -%>_name <% if (flags.length) {-%>[-<% for(var i=0; i<flags.
 <% } -%>
 <% } -%>
 
-Standard Options:
+Standard options:
 --help     Show this help
 --version  Show script version
 EOF

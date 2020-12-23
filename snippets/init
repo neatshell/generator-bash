@@ -1,16 +1,16 @@
 init() {
-    get_options "$@"
-    get_arguments "$@"
+   get_options "$@"
+   get_arguments "$@"
 
 <% if (args.length>0) {-%>
-    # ARGUMENTS:
-    debug " -- ARGUMENTS"
-    debug "|"
+   # ARGUMENTS:
+   debug " -- ARGUMENTS"
+   debug "|"
 <% for(var i=0; i<args.length; i++) {-%>
-    # $<%= args[i].varName -%> : <% if (args[i].varDesc instanceof Array) {-%><%= args[i].varDesc[0] %><% } else {-%><%= args[i].varDesc %><% } %>
-    debug "|   <%= args[i].varName -%>=$<%= args[i].varName %>"
+   # $<%= args[i].varName -%> : <% if (args[i].varDesc instanceof Array) {-%><%= args[i].varDesc[0] %><% } else {-%><%= args[i].varDesc %><% } %>
+   debug "|   <%= args[i].varName -%>=$<%= args[i].varName %>"
 <% } -%>
-    debug "|"
+   debug "|"
 <% } -%>
 
 <% if (options.length>0) {-%>
