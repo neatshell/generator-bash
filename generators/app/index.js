@@ -36,12 +36,12 @@ module.exports = class extends Generator {
 
     const that = this;
     const done = that.async();
-    const mainPrompt = promptNames.main;
+    const mainPrompt = promptNames.createMain(that.options.shebang);
 
     mainPrompt[0].default = that.values.description;
 
     that.prompt(mainPrompt).then(function(props) {
-      that.values.shebang = props.shebang;
+      that.values.shebang = that.options.shebang || props.shebang;
       that.values.description = props.description;
       if (that.options.multi) {
         that.composeWith(require.resolve("../command"), {

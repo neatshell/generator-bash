@@ -1,16 +1,3 @@
-const main = [
-  {
-    type: "input",
-    name: "description",
-    message: "Your script description"
-  },
-  {
-    type: "list",
-    name: "shebang",
-    message: "What interpreter",
-    choices: require("./interpreters")
-  }
-];
 const commands = [
   {
     type: "confirm",
@@ -127,8 +114,29 @@ const commandPrompts = [
   }
 ];
 
+function createMain(shebang) {
+  const main = [
+    {
+      type: "input",
+      name: "description",
+      message: "Your script description"
+    }
+  ];
+
+  if (!shebang) {
+    main.push({
+      type: "list",
+      name: "shebang",
+      message: "What interpreter",
+      choices: require("./interpreters")
+    });
+  }
+
+  return main;
+}
+
 module.exports = {
-  main,
+  createMain,
   commandPrompts,
   argPrompts,
   optionPrompts,

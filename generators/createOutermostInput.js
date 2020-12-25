@@ -21,4 +21,8 @@ module.exports = function(that) {
     hide: false,
     type: Boolean
   });
+  that.option("shebang", {
+    hide: true,
+    type: String
+  });
 };
