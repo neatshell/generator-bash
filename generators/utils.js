@@ -6,7 +6,7 @@ function createOption(optionProps) {
     varName: optionProps.varName,
     varLong: optionProps.varLong,
     varShort: optionProps.varShort,
-    varDesc: optionProps.varDesc
+    varDesc: optionProps.varDesc,
   };
 }
 
@@ -20,61 +20,66 @@ function createArgument(argProps) {
   return {
     varName: argProps.varName,
     varDesc: argProps.varDesc,
-    varMandatory: Boolean(argProps.varMandatory)
+    varMandatory: Boolean(argProps.varMandatory),
   };
 }
 
 function createCommand(cmdProps) {
   return {
     cmdName: cmdProps.cmdName,
-    cmdDesc: cmdProps.cmdDesc
+    cmdDesc: cmdProps.cmdDesc,
   };
 }
 
 function createValuesMap(that) {
+  let scriptType = "single";
   const scriptName = that.args[0];
   const scriptAlias = that.args[1];
-
-  const verboseFlag = {
-    varName: "_VERBOSE",
-    varShort: "v",
-    varLong: "verbose",
-    varValue: 1,
-    varDesc: "Enable verbose mode"
-  };
-
-  let scriptType = "single";
-  let args = [];
+  let silent;
   let commands;
+  const args = [];
+  const flags = [];
 
   if (that.options.multi) {
     scriptType = "multi";
+    silent = true;
     args.push(
       createArgument({
         varName: "command",
         varDesc: "The command name",
-        varMandatory: true
+        varMandatory: true,
       })
     );
     commands = [];
   }
 
+  if (scriptType === "single") {
+    silent = that.options.silent;
+    flags.push({
+      varName: "_VERBOSE",
+      varShort: "v",
+      varLong: "verbose",
+      varValue: 1,
+      varDesc: "Enable verbose mode",
+    });
+  }
+
   return {
-    scriptName: scriptName,
-    scriptAlias: scriptAlias,
+    scriptName,
+    scriptAlias,
     shebang: interpreters[0].value,
-    silent: that.options.silent,
+    silent,
     description: "",
     snippets: snippets[scriptType],
     options: [],
-    flags: [verboseFlag],
-    args: args,
+    flags,
+    args,
     commands,
     version: {
       major: 0,
       minor: 1,
-      patch: 0
-    }
+      patch: 0,
+    },
   };
 }
 
@@ -87,10 +92,10 @@ function getDir(generator, scriptName) {
 }
 
 module.exports = {
-  createArgument: createArgument,
+  createArgument,
   createCommand,
-  createOption: createOption,
-  createFlag: createFlag,
-  createValuesMap: createValuesMap,
-  getDir: getDir
+  createOption,
+  createFlag,
+  createValuesMap,
+  getDir,
 };

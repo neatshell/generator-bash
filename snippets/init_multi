@@ -33,7 +33,7 @@ init() {
     if [[ ! $(check_command ${command}) ]]; then
         usage
     else
-        command_dir=$(dirname "${0}")
+        command_dir=$(dirname -- "$(rreadlink "$0")")
         command=${1}
         shift
         ${command_dir}/${command} "${@}"

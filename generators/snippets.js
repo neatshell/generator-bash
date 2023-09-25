@@ -10,6 +10,7 @@ const common = [
 module.exports = {
   single: common.concat(["usage", "init", "body"]),
   multi: common.concat([
+    "rreadlink",
     "add_command",
     "check_command",
     "usage_multi",

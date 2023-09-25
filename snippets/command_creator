@@ -1,0 +1,29 @@
+#<%= shebang %>
+{
+  parent=$(dirname ${0})
+  curdir=$(pwd)
+  if [[ "${parent}" == "${curdir}" ]]; then
+    echo "The command \"<%=commandName%>\" hasn't been created yet"
+    echo
+    echo "You can choose to scaffold just a bare minimum (skeleton) with no input handling"
+    echo "or, if you are ready, starting with the (interactive) creation of the command"
+    echo
+    echo "How do you want to proceed?"
+    echo
+    select choice in skeleton interactive
+    do
+    case ${choice} in
+        skeleton)
+            yo bash:init <%=commandName%> '<%=parentName%> <%=commandName%>' --shebang '<%= shebang %>'
+            break;;
+        interactive)
+            yo bash <%=commandName%> '<%=parentName%> <%=commandName%>' --shebang '<%= shebang %>'
+            break;;
+        *)  break;;
+    esac
+    done
+  else
+    echo "You MUST be in ${parent} to create the \"<%=commandName%>\" command" && exit 1
+  fi
+  exit
+}
