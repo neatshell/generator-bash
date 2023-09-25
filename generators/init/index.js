@@ -24,7 +24,7 @@ module.exports = class extends Generator {
 
   writing(scriptName) {
     this.composeWith(require.resolve("../write"), {
-      arguments: [scriptName]
+      arguments: [scriptName],
     });
   }
 

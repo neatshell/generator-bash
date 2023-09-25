@@ -1,6 +1,6 @@
 function getValuesFlags(flags) {
   const valuesFlags = [];
-  flags.forEach(flag => {
+  flags.forEach((flag) => {
     flag.varValue = flag.varValue || 1;
     valuesFlags.push(flag);
   });
@@ -8,5 +8,5 @@ function getValuesFlags(flags) {
 }
 
 module.exports = {
-  getValuesFlags: getValuesFlags
+  getValuesFlags,
 };

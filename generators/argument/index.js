@@ -24,7 +24,7 @@ module.exports = class extends Generator {
 
     function promptArgument(hasAnotherArgument) {
       if (hasAnotherArgument) {
-        that.prompt(promptNames.argPrompts).then(function(argProps) {
+        that.prompt(promptNames.argPrompts).then((argProps) => {
           values.args.push(utils.createArgument(argProps));
           promptArgument(argProps.hasAnotherArgument);
         });
@@ -37,7 +37,7 @@ module.exports = class extends Generator {
       promptArgument(true);
     } else {
       this.log(chalk.yellow("ARGUMENTS"));
-      this.prompt(promptNames.args).then(function(props) {
+      this.prompt(promptNames.args).then((props) => {
         promptArgument(props.hasArguments);
       });
     }
@@ -52,7 +52,7 @@ module.exports = class extends Generator {
 
   writing(scriptName) {
     this.composeWith(require.resolve("../write"), {
-      arguments: [scriptName]
+      arguments: [scriptName],
     });
   }
 };

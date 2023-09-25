@@ -4,7 +4,7 @@ const common = [
   "log",
   "debug",
   "get_options",
-  "get_arguments"
+  "get_arguments",
 ];
 
 module.exports = {
@@ -15,7 +15,7 @@ module.exports = {
     "check_command",
     "usage_multi",
     "init_multi",
-    "body"
+    "body",
   ]),
   templates: [
     "header",
@@ -27,7 +27,7 @@ module.exports = {
     "get_options",
     "get_arguments",
     "init",
-    "init_multi"
+    "init_multi",
   ],
-  custom: ["body"]
+  custom: ["body"],
 };

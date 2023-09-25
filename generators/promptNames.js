@@ -3,60 +3,60 @@ const commands = [
     type: "confirm",
     name: "hasCommands",
     message: "Has commands?",
-    default: false
-  }
+    default: false,
+  },
 ];
 const args = [
   {
     type: "confirm",
     name: "hasArguments",
     message: "Has arguments?",
-    default: false
-  }
+    default: false,
+  },
 ];
 const options = [
   {
     type: "confirm",
     name: "hasOptions",
     message: "Has options?",
-    default: false
-  }
+    default: false,
+  },
 ];
 const flags = [
   {
     type: "confirm",
     name: "hasFlags",
     message: "Has flags?",
-    default: false
-  }
+    default: false,
+  },
 ];
 const optionPrompts = [
   {
     type: "input",
     name: "varName",
-    message: "var name"
+    message: "var name",
   },
   {
     type: "input",
     name: "varShort",
-    message: "Option short name"
+    message: "Option short name",
   },
   {
     type: "input",
     name: "varLong",
-    message: "Option long name"
+    message: "Option long name",
   },
   {
     type: "input",
     name: "varDesc",
-    message: "Option description"
+    message: "Option description",
   },
   {
     type: "confirm",
     name: "hasAnotherOption",
     message: "Another option?",
-    default: false
-  }
+    default: false,
+  },
 ];
 const flagPrompts = [
   optionPrompts[0],
@@ -66,52 +66,52 @@ const flagPrompts = [
   {
     type: "input",
     name: "varValue",
-    message: "flag value"
+    message: "flag value",
   },
   {
     type: "confirm",
     name: "hasAnotherFlag",
     message: "Another flag?",
-    default: false
-  }
+    default: false,
+  },
 ];
 const argPrompts = [
   optionPrompts[0],
   {
     type: "input",
     name: "varDesc",
-    message: "Argument description"
+    message: "Argument description",
   },
   {
     type: "confirm",
     name: "varMandatory",
     message: "is mandatory?",
-    default: false
+    default: false,
   },
   {
     type: "confirm",
     name: "hasAnotherArgument",
     message: "Another argument?",
-    default: false
-  }
+    default: false,
+  },
 ];
 const commandPrompts = [
   {
     type: "input",
     name: "cmdName",
-    message: "Command name"
+    message: "Command name",
   },
   {
     type: "input",
     name: "cmdDesc",
-    message: "Command description"
+    message: "Command description",
   },
   {
     type: "confirm",
     name: "hasAnotherCommand",
     message: "Another command?",
-    default: false
-  }
+    default: false,
+  },
 ];
 
 function createMain(shebang) {
@@ -119,8 +119,8 @@ function createMain(shebang) {
     {
       type: "input",
       name: "description",
-      message: "Your script description"
-    }
+      message: "Your script description",
+    },
   ];
 
   if (!shebang) {
@@ -128,7 +128,7 @@ function createMain(shebang) {
       type: "list",
       name: "shebang",
       message: "What interpreter",
-      choices: require("./interpreters")
+      choices: require("./interpreters"),
     });
   }
 
@@ -144,5 +144,5 @@ module.exports = {
   args,
   options,
   flags,
-  commands
+  commands,
 };

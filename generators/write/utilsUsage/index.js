@@ -3,5 +3,5 @@ const formatCommandDesc = require("./formatCommandDesc");
 
 module.exports = {
   formatOptionDesc,
-  formatCommandDesc
+  formatCommandDesc,
 };

@@ -21,7 +21,7 @@ module.exports = class extends Generator {
       that.composeWith(require.resolve("../init"), {
         arguments: [scriptName, scriptAlias, that],
         silent: that.options.silent,
-        multi: that.options.multi
+        multi: that.options.multi,
       });
       done();
     }
@@ -40,24 +40,24 @@ module.exports = class extends Generator {
 
     mainPrompt[0].default = that.values.description;
 
-    that.prompt(mainPrompt).then(function(props) {
+    that.prompt(mainPrompt).then((props) => {
       that.values.shebang = that.options.shebang || props.shebang;
       that.values.description = props.description;
       if (that.options.multi) {
         that.composeWith(require.resolve("../command"), {
-          arguments: [scriptName, that.values]
+          arguments: [scriptName, that.values],
         });
       } else {
         that.composeWith(require.resolve("../argument"), {
-          arguments: [scriptName, that.values]
+          arguments: [scriptName, that.values],
         });
       }
 
       that.composeWith(require.resolve("../option"), {
-        arguments: [scriptName, that.values]
+        arguments: [scriptName, that.values],
       });
       that.composeWith(require.resolve("../flag"), {
-        arguments: [scriptName, that.values]
+        arguments: [scriptName, that.values],
       });
 
       done();
@@ -71,7 +71,7 @@ module.exports = class extends Generator {
 
   writing(scriptName) {
     this.composeWith(require.resolve("../write"), {
-      arguments: [scriptName]
+      arguments: [scriptName],
     });
   }
 

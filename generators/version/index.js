@@ -10,12 +10,12 @@ module.exports = class extends Generator {
     super(args, opts);
     this.argument("scriptName", {
       required: true,
-      type: String
+      type: String,
     });
     this.argument("bump", {
       type: String,
       required: true,
-      description: BUMPABLES.join(" | ")
+      description: BUMPABLES.join(" | "),
     });
   }
 
@@ -33,7 +33,7 @@ module.exports = class extends Generator {
   }
 
   bumping(scriptName, bump) {
-    let version = this.values.version;
+    const { version } = this.values;
 
     switch (bump) {
       case PATCH:
@@ -57,7 +57,7 @@ module.exports = class extends Generator {
 
   writing(scriptName) {
     this.composeWith(require.resolve("../write"), {
-      arguments: [scriptName]
+      arguments: [scriptName],
     });
   }
 };

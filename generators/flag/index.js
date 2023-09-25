@@ -24,7 +24,7 @@ module.exports = class extends Generator {
 
     function promptFlag(hasAnotherFlag) {
       if (hasAnotherFlag) {
-        that.prompt(promptNames.flagPrompts).then(function(flagProps) {
+        that.prompt(promptNames.flagPrompts).then((flagProps) => {
           values.flags.push(utils.createFlag(flagProps));
           promptFlag(flagProps.hasAnotherFlag);
         });
@@ -37,7 +37,7 @@ module.exports = class extends Generator {
       promptFlag(true);
     } else {
       this.log(chalk.yellow("FLAGS"));
-      this.prompt(promptNames.flags).then(function(props) {
+      this.prompt(promptNames.flags).then((props) => {
         promptFlag(props.hasFlags);
       });
     }
@@ -52,7 +52,7 @@ module.exports = class extends Generator {
 
   writing(scriptName) {
     this.composeWith(require.resolve("../write"), {
-      arguments: [scriptName]
+      arguments: [scriptName],
     });
   }
 };

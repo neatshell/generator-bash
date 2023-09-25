@@ -3,12 +3,12 @@ const createDesc = require("./createDesc");
 function formatCommandDesc(items) {
   if (items) {
     const descList = [];
-    items.forEach(item => {
+    items.forEach((item) => {
       descList.push(item.cmdName);
     });
 
     let maxDescLeftLen = 0;
-    descList.forEach(descLeft => {
+    descList.forEach((descLeft) => {
       const curDescLeftLen = descLeft.length;
       if (curDescLeftLen > maxDescLeftLen) {
         maxDescLeftLen = curDescLeftLen;

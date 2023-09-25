@@ -24,7 +24,7 @@ module.exports = class extends Generator {
 
     function promptCommand(hasAnotherCommand) {
       if (hasAnotherCommand) {
-        that.prompt(promptNames.commandPrompts).then(function(cmdProps) {
+        that.prompt(promptNames.commandPrompts).then((cmdProps) => {
           values.commands.push(utils.createCommand(cmdProps));
           promptCommand(cmdProps.hasAnotherCommand);
         });
@@ -37,7 +37,7 @@ module.exports = class extends Generator {
       promptCommand(true);
     } else {
       this.log(chalk.yellow("COMMANDS"));
-      this.prompt(promptNames.commands).then(function(props) {
+      this.prompt(promptNames.commands).then((props) => {
         promptCommand(props.hasCommands);
       });
     }
@@ -52,7 +52,7 @@ module.exports = class extends Generator {
 
   writing(scriptName) {
     this.composeWith(require.resolve("../write"), {
-      arguments: [scriptName]
+      arguments: [scriptName],
     });
   }
 };

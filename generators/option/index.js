@@ -24,7 +24,7 @@ module.exports = class extends Generator {
 
     function promptOption(hasAnotherOption) {
       if (hasAnotherOption) {
-        that.prompt(promptNames.optionPrompts).then(function(optionProps) {
+        that.prompt(promptNames.optionPrompts).then((optionProps) => {
           values.options.push(utils.createOption(optionProps));
           promptOption(optionProps.hasAnotherOption);
         });
@@ -38,7 +38,7 @@ module.exports = class extends Generator {
     } else {
       this.log(chalk.yellow("OPTIONS"));
 
-      this.prompt(promptNames.options).then(function(props) {
+      this.prompt(promptNames.options).then((props) => {
         promptOption(props.hasOptions);
       });
     }
@@ -53,7 +53,7 @@ module.exports = class extends Generator {
 
   writing(scriptName) {
     this.composeWith(require.resolve("../write"), {
-      arguments: [scriptName]
+      arguments: [scriptName],
     });
   }
 };
